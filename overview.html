@@ -26,9 +26,10 @@
       -moz-osx-font-smoothing:grayscale;
       background-color: #ffffff;
       color: #1f2937; /* text-gray-800 */
-      font-size: 16px;
+      /* Base font increased for better readability and consistent scaling */
+      font-size: 18px;
       line-height: 1.6;
-      /* 🔥🔥 핵심 수정: body에 overflow-x-hidden 적용하여 모든 가로 스크롤을 방지합니다. */
+      /* Prevent horizontal scroll */
       overflow-x: hidden; 
     }
 
@@ -68,8 +69,8 @@
       width: 64px;
     }
 
-    /* 작은 텍스트 색상 (.small-muted) */
-    .small-muted{ color: #4b5563; font-size: .92rem }
+  /* 작은 텍스트 색상 (.small-muted) */
+  .small-muted{ color: #4b5563; font-size: .95rem }
 
     /* 카드 내 주요 숫자 값 스타일 (.card-value) 및 반응형 폰트 크기 */
     .card-value{ font-weight:700; color: var(--sinofex-deep); font-size: 1.2rem }
@@ -86,11 +87,17 @@
     /* 네비게이션바 블러 효과 (.nav-blur) */
     .nav-blur{ background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5)); backdrop-filter: blur(6px); }
 
-    /* 강조용 칩/알약 스타일 (.pill) */
-    .pill{ background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(7,59,138,0.03)); color: var(--sinofex-deep); padding:.35rem .6rem; border-radius:999px; font-weight:600 }
+  /* 강조용 칩/알약 스타일 (.pill) */
+  .pill{ background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(7,59,138,0.03)); color: var(--sinofex-deep); padding:.4rem .7rem; border-radius:999px; font-weight:600; font-size: .95rem }
 
-    /* 작은 아이콘 크기 (.icon-sm) */
-    .icon-sm{ width:20px; height:20px }
+  /* 작은 아이콘 크기 (.icon-sm) */
+  .icon-sm{ width:22px; height:22px }
+
+  /* activity card icon */
+  .activity-icon { font-size: 28px; }
+
+  /* Ensure inline SVGs inside cards are consistent */
+  .card svg { width: 24px; height: 24px; }
     
     /* 모바일 메뉴 애니메이션 관련 스타일 */
     .menu-enter { transform: translateY(-10px); opacity: 0; }
@@ -154,21 +161,32 @@
 }
  .activity-section {
   margin-top: 40px; /* ✅ 두 섹션 사이 간격 */
-}       .network-grid {
+}
+    .network-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
+      gap: 22px;
     }
+    /* Improved network item readability: left-aligned, larger body text and clearer title */
     .network-item {
       background: #fff;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #e6eefc;
       border-radius: 14px;
-      padding: 22px;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      padding: 20px 22px;
+      text-align: left;
+      box-shadow: 0 6px 16px rgba(7,59,138,0.04);
       transition: all 0.25s ease;
+      color: #374151; /* dark gray for body text */
+      font-size: 1rem;
+      line-height: 1.5;
     }
-    .network-title { font-weight: 600; color: #007bff; display: block; margin-bottom: 6px; }
+    .network-item:hover { box-shadow: 0 12px 28px rgba(7,59,138,0.06); transform: translateY(-4px); }
+
+    /* Make the partner/title label more prominent and in brand color */
+    .network-title { display: block; font-weight: 700; color: var(--sinofex-deep); margin-bottom: 8px; font-size: 1.02rem; }
+
+    /* Validation section header color (신규 계약·MOU) */
+    #validation h2 { color: var(--sinofex-deep); }
       .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -192,7 +210,9 @@
 
  .card h3 {
    margin: 0 0 6px 0;
- font-size: 1.05rem; }
+  font-size: 1.125rem; /* ~20px for headings */
+  line-height: 1.25;
+ }
 
 .tag {
  display: inline-block; font-size: 0.78rem;
@@ -206,7 +226,8 @@ margin-bottom: 8px;
  .desc {
  margin: 6px 0 0 0;
  color: #222;
-font-size: 0.95rem;
+ font-size: 1rem;
+ line-height: 1.5;
  }
    </style>
 
@@ -390,42 +411,78 @@ font-size: 0.95rem;
   <div class="mb-6">
     <h2 class="text-2xl font-bold">📜 인증·특허 출원</h2>
     <div class="sinofex-hr mt-3"></div>
-    <p class="small-muted mt-3">시노펙스 기술 성과를 정리합니다</p>
+    <p class="small-muted mt-3">시노펙스 주요 인증·허가·특허 현황을 한눈에 정리합니다.</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> 
-    <article class="card">
-      <h3 class="font-semibold">혈액여과기</h3>
-      <span class="pill">인증</span>
-      <p class="desc">CE MDR 인증 신청 완료</p>
+  <!-- Primary cards: 3-column on desktop, stacked on mobile -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6" role="list" aria-label="인증 및 허가 목록">
+    <article class="card p-5 flex gap-4 items-start" role="listitem" data-aos="fade-up">
+      <div>
+        <h3 class="font-semibold text-lg">혈액여과기</h3>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="pill">인증</span>
+          <span class="small-muted text-sm">CE MDR 신청 완료</span>
+        </div>
+        <p class="desc mt-3">BSI 접수 완료 — 11개 제품 대상. IRB 임상 및 SCI급 논문으로 성능·안전성 검증.</p>
+      </div>
     </article>
 
-    <article class="card">
-      <h3 class="font-semibold">이동형 정수기</h3>
-      <span class="pill">허가</span>
-      <p class="desc">식약처 허가 신청</p>
+    <article class="card p-5 flex gap-4 items-start" role="listitem" data-aos="fade-up" data-aos-delay="60">
+      <div>
+        <h3 class="font-semibold text-lg">이동형 정수기</h3>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="pill">허가</span>
+          <span class="small-muted text-sm">식약처 신청</span>
+        </div>
+        <p class="desc mt-3">KMDF 국책과제 기반, 소형화된 이동형 정수기로 재택 및 병원용 정재수 공급을 목표.</p>
+      </div>
     </article>
 
-    <article class="card">
-      <h3 class="font-semibold">혈액여과기 임상</h3>
-      <span class="pill">임상·논문</span> 
-      <p class="desc">임상 성공 및 SCI급 논문 게재</p>
+    <article class="card p-5 flex gap-4 items-start" role="listitem" data-aos="fade-up" data-aos-delay="120">
+      <div>
+        <h3 class="font-semibold text-lg">혈액여과기 임상</h3>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="pill">임상·논문</span>
+          <span class="small-muted text-sm">SCI 등재</span>
+        </div>
+        <p class="desc mt-3">50명 대상 다기관 임상 완료 — 글로벌 제품 대비 우수한 중분자 제거 성능과 안전성 확보.</p>
+      </div>
     </article>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-    <article class="card"> <h3 class="font-semibold">랩온어칩</h3>
-      <span class="pill">특허</span>
-      <p class="desc">혈구분석 카트리지 특허 출원</p>
+  <!-- Secondary cards row -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6" role="list" aria-label="특허 및 추가 성과">
+    <article class="card p-5 flex gap-4 items-start" role="listitem" data-aos="fade-up" data-aos-delay="180">
+      <div>
+        <h3 class="font-semibold text-lg">랩온어칩</h3>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="pill">특허</span>
+          <span class="small-muted text-sm">출원 진행</span>
+        </div>
+        <p class="desc mt-3">마이크로유체 기반 혈구분석 카트리지 — 소량 혈액으로 다중 분석, PoC 진단 시장 진입 목표.</p>
+      </div>
     </article>
 
-    <article class="card"> <h3 class="font-semibold">임상시험</h3>
-      <span class="pill">다기관 임상</span>
-      <p class="desc">혈액투석 환자 50명 대상, 5개 상급병원 임상 종료</p>
+    <article class="card p-5 flex gap-4 items-start" role="listitem" data-aos="fade-up" data-aos-delay="240">
+      <div>
+        <h3 class="font-semibold text-lg">임상시험</h3>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="pill">다기관 임상</span>
+          <span class="small-muted text-sm">완료</span>
+        </div>
+        <p class="desc mt-3">국내 5개 상급병원에서 50명 대상 임상 완료 — 상용화 및 인증 진행의 핵심 증거 자료 제공.</p>
+      </div>
     </article>
-    <article class="card"> <h3 class="font-semibold">ePTFE 개발 성공</h3>
-      <span class="pill">국내</span>
-      <p class="desc">혈액투석 환자 50명 대상, 5개 상급병원 임상 종료</p>
+
+    <article class="card p-5 flex gap-4 items-start" role="listitem" data-aos="fade-up" data-aos-delay="300">
+      <div>
+        <h3 class="font-semibold text-lg">ePTFE 개발 성공</h3>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="pill">국산화</span>
+          <span class="small-muted text-sm">양산 준비</span>
+        </div>
+        <p class="desc mt-3">반도체·바이오용 초정밀 멤브레인 국산화 — Full In-House 생산체계 구축 및 2026년 양산 목표.</p>
+      </div>
     </article>
   </div>
 </section>
