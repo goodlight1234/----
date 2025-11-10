@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=900">
+    <title>시노펙스 2025 한해를 한눈에</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.8/countUp.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+      /* CSS 변수: 웹페이지 전체에서 사용할 색상 정의 */
+      :root{
+      --brand: #0971C2;
+      --muted: #f7fbff;
+      --sinofex-blue: #0f62fe; /* 시노펙스 메인 블루 */
+      --sinofex-deep: #073b8a; /* 시노펙스 딥 블루 */
+    }
+
+    /* HTML/Body 스타일: 폰트 설정, 배경색, 글자색, 핵심: 가로 스크롤 방지 */
+    html,body{
+       font-family: 'Noto Sans KR', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, "Helvetica Neue";
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background-color: #ffffff;
+      color: #1f2937; /* text-gray-800 */
+      font-size: 16px;
+      line-height: 1.6;
+      /* 🔥🔥 핵심 수정: body에 overflow-x-hidden 적용하여 모든 가로 스크롤을 방지합니다. */
+      overflow-x: hidden; 
+    }
+
+    /* Glass Card 스타일 (.card): 투명한 유리 느낌의 카드 디자인 */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.72));
+      backdrop-filter: blur(6px); /* 블러 효과 */
+      border: 1px solid rgba(15,98,254,0.08);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(15,98,254,0.06);
+      transition: transform .35s cubic-bezier(.2,.9,.2,1), box-shadow .35s; /* 호버 애니메이션 준비 */
+    }
+
+    /* Card 호버 효과: 마우스를 올렸을 때 살짝 올라오는 애니메이션 */
+    .card:hover{
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 18px 40px rgba(15,98,254,0.14);
+    }
+
+    /* Glow Accent (.accent-glow): 카드의 테두리에 은은한 빛 효과 추가 */
+    .accent-glow::before{
+      content: '';
+      position: absolute;
+      inset: -2px;
+      z-index: -1;
+      border-radius: 16px;
+      background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(7,59,138,0.06));
+      filter: blur(16px);
+      opacity: 0.9;
+    }
+
+    /* 시노펙스 구분선 (.sinofex-hr): 파란색 그라데이션이 적용된 가로선 */
+    .sinofex-hr{
+      height: 4px;
+      background: linear-gradient(90deg, var(--sinofex-blue), var(--sinofex-deep));
+      border-radius: 6px;
+      width: 64px;
+    }
+
+    /* 작은 텍스트 색상 (.small-muted) */
+    .small-muted{ color: #4b5563; font-size: .92rem }
+
+    /* 카드 내 주요 숫자 값 스타일 (.card-value) 및 반응형 폰트 크기 */
+    .card-value{ font-weight:700; color: var(--sinofex-deep); font-size: 1.2rem }
+    @media (min-width:1024px){ .card-value{ font-size:1.8rem } } /* 데스크톱에서 더 크게 */
+
+    /* 섹션 간격 (.section) */
+    .section{ padding: 3.5rem 0 }
+
+    /* 차트 컨테이너 (.chart-wrap): 반응형 높이 설정 (차트가 찌그러지지 않도록) */
+    .chart-wrap{ position: relative; width:100%;height:320px }
+    @media (max-width:768px){ .chart-wrap{ height:260px } }
+    @media (max-width:480px){ .chart-wrap{ height:200px } }
+
+    /* 네비게이션바 블러 효과 (.nav-blur) */
+    .nav-blur{ background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5)); backdrop-filter: blur(6px); }
+
+    /* 강조용 칩/알약 스타일 (.pill) */
+    .pill{ background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(7,59,138,0.03)); color: var(--sinofex-deep); padding:.35rem .6rem; border-radius:999px; font-weight:600 }
+
+    /* 작은 아이콘 크기 (.icon-sm) */
+    .icon-sm{ width:20px; height:20px }
+    
+    /* 모바일 메뉴 애니메이션 관련 스타일 */
+    .menu-enter { transform: translateY(-10px); opacity: 0; }
+    .menu-enter-active { transform: translateY(0); opacity: 1; transition: all 0.3s ease-in-out; }
+  .yoy {
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 8px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .yoy.up { background-color: rgba(0, 150, 255, 0.1); color: #0080ff; }
+    .yoy.down { background-color: rgba(255, 80, 80, 0.1); color: #ff3333; }
+    .chart-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .activity-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.72));
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(15,98,254,0.08);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(15,98,254,0.06);
+  padding: 24px 10px;
+  text-align: center;
+  transition: transform .35s cubic-bezier(.2,.9,.2,1), box-shadow .35s;
+  height: 160px;
+}
+
+.activity-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15,98,254,0.12);
+}
+
+.activity-icon {
+  font-size: 34px;
+  margin-bottom: 10px;
+  color: var(--sinofex-deep); /* 브랜드 톤에 맞춰 블루 통일 */
+}
+
+.activity-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.activity-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--sinofex-deep);
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+ .activity-section {
+  margin-top: 40px; /* ✅ 두 섹션 사이 간격 */
+}       .network-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    .network-item {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      transition: all 0.25s ease;
+    }
+    .network-title { font-weight: 600; color: #007bff; display: block; margin-bottom: 6px; }
+      .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  /* 기존 카드 스타일 (220px 이상 반응형 카드) */
+ .cards {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+ gap: 12px;
+ }
+
+ .card {
+ background: #fff;
+ border-radius: 10px;
+ padding: 14px;
+ box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+ border: 1px solid rgba(0,0,0,0.04);
+ }
+
+ .card h3 {
+   margin: 0 0 6px 0;
+ font-size: 1.05rem; }
+
+.tag {
+ display: inline-block; font-size: 0.78rem;
+ padding: 4px 8px;
+ border-radius: 999px;
+background: rgba(0,0,0,0.06);
+ color: #333;
+margin-bottom: 8px;
+}
+
+ .desc {
+ margin: 6px 0 0 0;
+ color: #222;
+font-size: 0.95rem;
+ }
+   </style>
+
+</head>
+
+<body class="antialiased">
+  <div id="menuOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 z-40"></div>
+
+  <div id="mobileMenu"
+  class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/70 backdrop-blur-lg shadow-xl z-50 transform translate-x-full transition-transform duration-500 ease-in-out">
+  <div class="p-6 space-y-6 text-lg font-medium text-slate-800">
+    <a href="#hero" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
+    <a href="https://goodlight1234.github.io/skilltomarket/" class="block hover:text-blue-600">2) 기술 & 마케팅 활동</a>
+    <a href="#validation" class="block hover:text-blue-600">3) 임직원 인터뷰</a>
+    <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
+    <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
+    <a href="#news" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
+
+    <button id="closeMenu"
+      class="mt-8 w-full px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
+      닫기
+    </button>
+  </div>
+</div>
+
+  <header class="fixed w-full z-40 top-4 left-0 px-4">
+  <nav class="max-w-6xl mx-auto flex items-center justify-between p-3 md:p-4 rounded-xl nav-blur card">
+    <div class="flex items-center gap-3 md:gap-4">
+      <div class="w-11 h-11 md:w-12 md:h-12 rounded-lg flex items-center justify-center flex-shrink-0 text-base md:text-lg font-bold" 
+           style="background: linear-gradient(180deg,var(--sinofex-blue),var(--sinofex-deep)); color:white;">
+        S
+      </div>
+
+      <!-- 제목 영역 -->
+      <div class="hidden sm:block">
+        <div class="text-base md:text-lg font-bold leading-tight">2025 SYNOPEX NEWSLETTER</div>
+        <div class="text-xs md:text-sm small-muted">시노펙스 2025 한해를 한눈에</div>
+      </div>
+
+      <div class="block sm:hidden text-sm md:text-base font-bold truncate max-w-[150px]">
+        SYNOPEX NEWSLETTER
+      </div>
+    </div>
+
+    <!-- 메뉴 -->
+    <div class="hidden md:flex items-center gap-7 lg:gap-8">
+      <a href="#tech" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">전시 & 학술대회</a>
+      <a href="#validation" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">신규 계약·MOU</a>
+      <a href="#business" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">인증·특허 출원</a>
+      <a href="#awards" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">성과 & 수상</a>
+    </div>
+
+    <!-- 메뉴 버튼 -->
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <button class="p-2 rounded-md" aria-label="menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+  
+  <main class="max-w-6xl mx-auto px-4 pt-28 pb-20">
+    
+    <section class="section" id="hero">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        <div class="lg:col-span-2 card p-6 relative overflow-hidden accent-glow" data-aos="fade-right">
+          <h1 class="text-3xl lg:text-4xl font-extrabold leading-tight">핵심 실적(YoY) & 주요 활동지표 </h1>
+          <div class="sinofex-hr mt-4 mb-4"></div>
+          <p class="small-muted max-w-2xl">2025년 한 해 동안의 실적, 주요 활동 내용을 한 눈에 보기 쉽게 정리했습니다.</p>
+          
+          <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="card p-4">
+              <div class="text-sm small-muted">매출액</div>
+              <div class="card-value mt-2" data-count="1">67,652억 원</div> <div class="yoy up">+18.5%</div>
+            </div>
+            <div class="card p-4">
+              <div class="text-sm small-muted">영업이익</div>
+              <div class="card-value mt-2" data-count="12">7,940억 원</div>  <div class="yoy up">+18.5%</div>
+            </div>
+            <div class="card p-4">
+              <div class="text-sm small-muted">당기순이익</div>
+              <div class="card-value mt-2" data-count="8">5,420억 원</div>  <div class="yoy down">+18.5%</div>
+            </div>
+           </div>
+            <div class="activity-section aos-init aos-animate" data-aos="fade-up">
+      <div class="activity-section mt-10" data-aos="fade-up"></div>
+      <div class="activity-grid">
+        <div class="activity-card aos-init aos-animate" data-aos="flip-up"><div class="activity-icon">🌐</div><div class="activity-name">전시·학회 참가</div><div class="activity-value">7회</div></div>
+        <div class="activity-card aos-init aos-animate" data-aos="flip-up" data-aos-delay="100"><div class="activity-icon">🤝</div><div class="activity-name">신규 계약·MOU</div><div class="activity-value">6건</div></div>
+        <div class="activity-card aos-init aos-animate" data-aos="flip-up" data-aos-delay="200"><div class="activity-icon">📜</div><div class="activity-name">인증·특허 출원</div><div class="activity-value">5건</div></div>
+        <div class="activity-card aos-init aos-animate" data-aos="flip-up" data-aos-delay="300"><div class="activity-icon">🏅</div><div class="activity-name">수상·선정</div><div class="activity-value">3건</div></div>
+      </div>
+    </div>
+          <div class="mt-6">
+          
+          </div>
+        </div>
+        
+        <aside class="card p-5" data-aos="fade-left">
+          <div class="flex items-center justify-between">
+            <div>
+              
+              <div class="text-xl font-bold mt-1">매출액 추이</div>
+            </div>
+          
+          </div>
+          <div class="chart-wrap mt-4">
+      <canvas id="lineChart"class="h-full w-full"></canvas>
+</div>
+          
+        </aside>
+      </div>
+    </section>
+
+    <section id="tech" class="section" data-aos="fade-up">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold">🌐전시 & 학술대회</h2>
+        <div class="sinofex-hr mt-3"></div>
+        <p class="small-muted mt-3">현장에서 만난 시노펙스 기술력</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <article class="card p-5" data-aos="zoom-in">
+          <div class="flex items-start gap-3">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3 6 6 .5-4.5 4 1 6-5-3-5 3 1-6L3 8.5 9 8 12 2z" stroke="currentColor" stroke-width="1.2"/></svg>
+            <div>
+              <h3 class="font-semibold">Semicon Korea </h3>
+              <p class="small-muted text-sm mt-1">첨단 공정 필터 전시로 반도체 공정의 국산화 성공 부각</p>
+            </div>
+          </div>
+        </article>
+        <article class="card p-5" data-aos="zoom-in" data-aos-delay="100">
+          <div class="flex items-start gap-3">
+             <svg class="icon-sm" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3 6 6 .5-4.5 4 1 6-5-3-5 3 1-6L3 8.5 9 8 12 2z" stroke="currentColor" stroke-width="1.2"/></svg>
+            <div>
+              <h3 class="font-semibold">KSN 2025/병원투석간호사회</h3>
+              <p class="small-muted text-sm mt-1">혈액투석기 상용화 모델 공개</p>
+            </div>
+          </div>
+        </article>
+        <article class="card p-5" data-aos="zoom-in" data-aos-delay="200">
+          <div class="flex items-start gap-3">
+             <svg class="icon-sm" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3 6 6 .5-4.5 4 1 6-5-3-5 3 1-6L3 8.5 9 8 12 2z" stroke="currentColor" stroke-width="1.2"/></svg>
+            <div>
+              <h3 class="font-semibold">Entech / Envex / 국제 물산업 박람회</h3>
+              <p class="small-muted text-sm mt-1">산업용 정수 시스템 전시</p>
+            </div>
+          </div>
+        </article>
+        <article class="card p-5" data-aos="zoom-in" data-aos-delay="200">
+          <div class="flex items-start gap-3">
+             <svg class="icon-sm" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3 6 6 .5-4.5 4 1 6-5-3-5 3 1-6L3 8.5 9 8 12 2z" stroke="currentColor" stroke-width="1.2"/></svg>
+            <div>
+              <h3 class="font-semibold">日 JSHHD 학회 </h3>
+              <p class="small-muted text-sm mt-1">국산 혈액투석 기술력 입증</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    
+    <section id="validation" class="section" data-aos="fade-up">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold">🤝 신규 계약·MOU</h2>
+        <div class="sinofex-hr mt-3"></div>
+        <p class="small-muted mt-3">수출 MOU, 국책과제 선정, 전략적 인수합병 등 사업적 성과를 정리합니다.</p>
+      </div>
+      <div class="network-grid">
+          <div class="network-item"><span class="network-title">롯데케미칼</span>수처리 사업 인수 완료</div>
+          <div class="network-item"><span class="network-title">PRIMEDIC</span>계약 및 기술협력 MOU 체결</div>
+          <div class="network-item"><span class="network-title">모로코 수출</span>국산 혈액투석기 본 계약 체결</div>
+          <div class="network-item"><span class="network-title">힐넥서스</span>공동개발:넥스케어(NexCare) 여행투석 플랫폼</div>
+          <div class="network-item"><span class="network-title">비브라운 코리아</span>글로벌 헬스케어 기업과 MOU 체결</div>
+          <div class="network-item"><span class="network-title">탄소 배출권 판매 계약</span>싱가포르 D사와 판매 계약 체결</div>
+        </div>
+        
+      
+      </div>
+    </section>
+    
+   <section id="business" class="section" data-aos="fade-up">
+  <div class="mb-6">
+    <h2 class="text-2xl font-bold">📜 인증·특허 출원</h2>
+    <div class="sinofex-hr mt-3"></div>
+    <p class="small-muted mt-3">시노펙스 기술 성과를 정리합니다</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> 
+    <article class="card">
+      <h3 class="font-semibold">혈액여과기</h3>
+      <span class="pill">인증</span>
+      <p class="desc">CE MDR 인증 신청 완료</p>
+    </article>
+
+    <article class="card">
+      <h3 class="font-semibold">이동형 정수기</h3>
+      <span class="pill">허가</span>
+      <p class="desc">식약처 허가 신청</p>
+    </article>
+
+    <article class="card">
+      <h3 class="font-semibold">혈액여과기 임상</h3>
+      <span class="pill">임상·논문</span> 
+      <p class="desc">임상 성공 및 SCI급 논문 게재</p>
+    </article>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+    <article class="card"> <h3 class="font-semibold">랩온어칩</h3>
+      <span class="pill">특허</span>
+      <p class="desc">혈구분석 카트리지 특허 출원</p>
+    </article>
+
+    <article class="card"> <h3 class="font-semibold">임상시험</h3>
+      <span class="pill">다기관 임상</span>
+      <p class="desc">혈액투석 환자 50명 대상, 5개 상급병원 임상 종료</p>
+    </article>
+    <article class="card"> <h3 class="font-semibold">ePTFE 개발 성공</h3>
+      <span class="pill">국내</span>
+      <p class="desc">혈액투석 환자 50명 대상, 5개 상급병원 임상 종료</p>
+    </article>
+  </div>
+</section>
+
+    
+    <section id="awards" class="section" data-aos="fade-up">
+      <div class="mb-6 flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold">🏅 성과 & 수상</h2>
+          <div class="sinofex-hr mt-3"></div>
+          <p class="small-muted mt-3">주요 수상 내역과 연혁을 한 눈에 보여줍니다.</p>
+        </div>
+        <div class="hidden md:flex items-center gap-4">
+          <span class="pill">Top Innovator 2025</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card p-5" data-aos="slide-right">
+          <h4 class="font-semibold">Awards</h4>
+          <ul class="mt-3 space-y-2 small-muted text-sm">
+            <li> 시노텍스 중소기업중앙회장 표창 수상</li>
+            <li>삼성전자 상생협력 우수상</li>
+            <li>탄소중립 국책과제 선정</li>
+          </ul>
+        </div>
+        <div class="card p-5" data-aos="slide-up">
+          <h4 class="font-semibold">Timeline</h4>
+          <ol class="mt-3 space-y-3 small-muted text-sm">
+            <li><strong>2025-01</strong> 시노텍스 중소기업중앙회장 표창 수상</li>
+            <li><strong>2025-04</strong> 탄소중립 국책과제 선정</li>
+            <li><strong>2025-05</strong> 삼성전자 상생협력 우수상</li>
+          </ol>
+        </div>
+        <div class="card p-5" data-aos="slide-left">
+          <h4 class="font-semibold">Partner Network</h4>
+          <p class="small-muted mt-2">주요 파트너: 삼성전자,비브라운코리아, 힐넥서스 등</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="pill">Samsung</span>
+            <span class="pill">B. Braun</span>
+            <span class="pill">HillNexus</span>
+          </div>
+        </div>
+      </div>
+    </section>
+       <section class="mb-24 p-6 rounded-2xl bg-[linear-gradient(180deg,#f7fbff,transparent)] card-border text-center" data-aos="fade-up">
+      <h3 class="text-2xl font-semibold text-[var(--brand)]">2025 시노펙스 뉴스레터</h3>
+      <p class="text-sm text-gray-600 mt-3">기술성과와 실질 사업 효과 플로우를 보려면 밑에 버튼을 클릭하세요</p>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://goodlight1234.github.io/skilltomarket/" class="px-4 py-2 rounded-md bg-[var(--brand)] text-white">사업 성과 자세히</a>
+      </div>
+    </section>
+  </main>
+  
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://unpkg.com/countup.js"></script> 
+<script>
+    // 🌟 AOS (Animate On Scroll) 초기화 (하나의 설정으로 통합) 🌟
+    AOS.init({
+        duration: 800, // 애니메이션 지속 시간 (ms)
+        easing: 'ease-in-out',
+        once: true, // 한 번만 재생
+        mirror: false,
+        offset: 60 // 두 번째 블록에서 추가된 offset 값 통합
+    });
+
+    // 🌟 CountUp.js 초기화 함수 🌟
+    function tryInitCountUps() {
+        // CountUp 클래스가 존재하는지 확인하여 오류 방지
+        if (typeof CountUp === 'undefined') return; 
+
+        document.querySelectorAll('.card-value').forEach(el => {
+            const target = Number(el.getAttribute('data-count') || 0); // data-count 값 가져오기
+            if (isNaN(target)) return;
+
+            const c = new CountUp(el, target, { duration: 2.4, separator: ',' });
+
+            // AOS 애니메이션이 시작될 때 CountUp 시작
+            if (!el.classList.contains('counted')) {
+                el.addEventListener('aos:in', () => { c.start(); el.classList.add('counted'); });
+            }
+        });
+    }
+
+    // 🌟 DOMContentLoaded: HTML 문서 로드 완료 후 실행 🌟
+    document.addEventListener('DOMContentLoaded', () => {
+        tryInitCountUps(); // CountUp 초기화
+
+        // 접근성 향상: 카드에 키보드 포커스 가능하게 설정
+        document.querySelectorAll('.card').forEach(c => { c.setAttribute('tabindex', '0'); });
+
+        // AOS가 발생할 때 CountUp 재시도 (혹시 모를 상황 대비)
+        document.querySelectorAll('[data-aos]').forEach(el => {
+            el.addEventListener('aos:in', () => {
+                tryInitCountUps();
+            });
+        });
+
+        // ----------------------------------------------------
+        // 📈 Chart.js 설정
+        // ----------------------------------------------------
+
+        // 🌟 1. 라인 차트 (lineChart) 설정 (매출액 추이 - 분기 데이터 채택) 🌟
+        const lineCtx = document.getElementById('lineChart');
+        if (lineCtx) {
+            new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['24.4Q', '25.1Q', '25.2Q', '25.3Q', '25.4Q'], // 첫 번째 블록 데이터
+                    datasets: [{
+                        label: '매출액 (억 원)',
+                        data: [55400, 58800, 61200, 64500, 67652],
+                        borderColor: '#0f62fe',
+                        fill: true, // 두 번째 블록에서 가져옴
+                        tension: 0.4, // 두 번째 블록에서 가져옴
+                        backgroundColor: 'rgba(15,98,254,0.1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { callbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.formattedValue + '억 원' } }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { beginAtZero: false, grid: { color: 'rgba(10,10,10,0.04)' } }
+                    }
+                }
+            });
+        }
+
+        // 🌟 2. 영역 차트 (Area Chart - validation) 설정 🌟
+        const areaCanvas = document.getElementById('areaChart');
+        if (areaCanvas) {
+            const areaCtx = areaCanvas.getContext('2d');
+
+            // 그라데이션 정의 (Area Chart에 필요)
+            const g1 = areaCtx.createLinearGradient(0, 0, 0, 400);
+            g1.addColorStop(0, 'rgba(15,98,254,0.28)');
+            g1.addColorStop(1, 'rgba(15,98,254,0.03)');
+            const g2 = areaCtx.createLinearGradient(0, 0, 0, 400);
+            g2.addColorStop(0, 'rgba(7,59,138,0.18)');
+            g2.addColorStop(1, 'rgba(7,59,138,0.02)');
+
+            new Chart(areaCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'],
+                    datasets: [
+                        { label: 'Field Tests', data: [12, 25, 35, 48, 62, 72], fill: true, backgroundColor: g1, borderColor: 'rgba(15,98,254,0.95)', tension: 0.36, pointRadius: 3 },
+                        { label: 'Clinical', data: [2, 8, 15, 22, 35, 50], fill: true, backgroundColor: g2, borderColor: 'rgba(7,59,138,0.9)', tension: 0.36, pointRadius: 3 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: { mode: 'index', intersect: false, backgroundColor: 'rgba(12,12,12,0.9)' },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { beginAtZero: true, grid: { color: 'rgba(10,10,10,0.04)' } }
+                    },
+                    animation: { duration: 1000 }
+                }
+            });
+        }
+
+        // ----------------------------------------------------
+        // 📱 모바일 메뉴 제어 로직 (스크롤 이동 기능 유지)
+        // ----------------------------------------------------
+        const menuBtn = document.querySelector('button[aria-label="menu"]'); // 햄버거 버튼
+        const mobileMenu = document.getElementById("mobileMenu"); // 모바일 메뉴 패널
+        const overlay = document.getElementById("menuOverlay"); // 메뉴 배경 오버레이
+        const closeBtn = document.getElementById("closeMenu"); // 닫기 버튼
+
+        // 메뉴 열기 함수
+        const openMenu = () => {
+            mobileMenu.classList.remove("translate-x-full");
+            overlay.classList.remove("opacity-0", "pointer-events-none");
+            overlay.classList.add("opacity-100");
+        };
+
+        // 메뉴 닫기 함수
+        const closeMenu = () => {
+            mobileMenu.classList.add("translate-x-full");
+            overlay.classList.add("opacity-0", "pointer-events-none");
+            overlay.classList.remove("opacity-100");
+        };
+
+        // 이벤트 리스너 연결
+        if (menuBtn && mobileMenu && overlay && closeBtn) {
+            menuBtn.addEventListener("click", openMenu);
+            closeBtn.addEventListener("click", closeMenu);
+            overlay.addEventListener("click", closeMenu);
+
+            // 메뉴 항목 클릭 시: 메뉴 닫고 해당 섹션으로 스크롤
+            document.querySelectorAll("#mobileMenu a").forEach(link => {
+                link.addEventListener("click", (e) => {
+                    const href = link.getAttribute("href");
+                    if (href.startsWith("#")) {
+                        e.preventDefault(); // 기본 링크 이동 방지
+                        closeMenu();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            // 닫는 애니메이션 시간(400ms) 이후에 스크롤 이동
+                            setTimeout(() => {
+                                target.scrollIntoView({ behavior: "smooth" });
+                            }, 400);
+                        }
+                    } else {
+                        closeMenu(); // 외부 링크여도 메뉴는 닫습니다.
+                    }
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

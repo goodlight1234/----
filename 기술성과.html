@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <!-- 모바일 반응형 뷰포트 (고정 width 제거) -->
+ <meta name="viewport" content="width=900">
+  <title>2025 SYNOPEX NEWSLETTER</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Noto Sans KR -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <meta name="color-scheme" content="light dark">
+
+  <style>
+    :root{
+      --brand: #0971C2;
+      --muted: #f7fbff;
+      --sinofex-blue: #0f62fe;
+      --sinofex-deep: #073b8a;
+    }
+
+    html,body{
+       font-family: 'Noto Sans KR', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, "Helvetica Neue";
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background-color: #ffffff;
+      color: #1f2937; /* text-gray-800 */
+      font-size: 16px;
+      line-height: 1.6;
+      /* 🔥🔥 핵심 수정: body에 overflow-x-hidden 적용하여 모든 가로 스크롤을 방지합니다. */
+      overflow-x: hidden; 
+    }
+    /* subtle background sections */
+    .section-muted { background: linear-gradient(180deg, rgba(9,113,194,0.03), transparent); }
+
+    /* card subtle border */
+    .card-border { border: 1px solid rgba(9,113,194,0.06); }
+
+    /* small utility for gradient divider line */
+    .grad-line { background: linear-gradient(90deg, rgba(9,113,194,1), rgba(56,189,248,1)); height: 6px; border-radius: 9999px; }
+
+    /* timeline dot fallback */
+    .timeline-dot { width: .875rem; height: .875rem; background: var(--brand); border-radius: 9999px; }
+
+       /* Glass Navigation */
+     /* Simple nav */
+    .nav-blur{ background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5)); backdrop-filter: blur(6px); }
+
+    /* Utility highlight */
+    .pill{ background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(7,59,138,0.03)); color: var(--sinofex-deep); padding:.35rem .6rem; border-radius:999px; font-weight:600 }
+
+    /* tiny icon sizes */
+    .icon-sm{ width:20px; height:20px }
+ .menu-enter { transform: translateY(-10px); opacity: 0; }
+    .menu-enter-active { transform: translateY(0); opacity: 1; transition: all 0.3s ease-in-out; }
+ .card {
+ background: #fff;
+ border-radius: 10px;
+ padding: 14px;
+ box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+ border: 1px solid rgba(0,0,0,0.04);
+ }
+
+    /* reduced motion support */
+    @media (prefers-reduced-motion: reduce){
+      * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    }
+
+    /* small responsive tweaks for images inside list cards */
+    .card-image-cover { min-height: 120px; object-fit: cover; width: 100%; border-radius: .5rem; }
+    
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- =========================
+       Header (Navigation)
+       ========================= -->
+ <body class="antialiased">
+ <div id="menuOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 z-40"></div>
+
+<div id="mobileMenu"
+  class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/70 backdrop-blur-lg shadow-xl z-50 transform translate-x-full transition-transform duration-500 ease-in-out">
+  <div class="p-6 space-y-6 text-lg font-medium text-slate-800">
+    <a href="https://goodlight1234.github.io/summation/" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
+    <a href="#tech" class="block hover:text-blue-600">2) 기술 & 마케팅 활동</a>
+    <a href="#validation" class="block hover:text-blue-600">3) 임직원 인터뷰</a>
+    <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
+    <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
+    <a href="#news" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
+
+    <button id="closeMenu"
+      class="mt-8 w-full px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
+      닫기
+    </button>
+  </div>
+</div>
+  <header class="fixed w-full z-40 top-4 left-0 px-4">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between p-2 sm:p-3 rounded-xl nav-blur card">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(180deg,var(--sinofex-blue),var(--sinofex-deep)); color:white; font-weight:700">S</div>
+          <div class="hidden sm:block"> 
+            <div class="text-sm font-bold">2025 SYNOPEX NEWSLETTER</div>
+            <div class="text-xs small-muted">시노펙스 2025 한해를 한눈에</div>
+          </div>
+          <div class="block sm:hidden text-sm font-bold truncate max-w-[150px]">
+            SYNOPEX NEWSLETTER
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="#tech" class="text-sm font-medium text-slate-700 hover:text-slate-900">현장검증</a>
+        <a href="#validation" class="text-sm font-medium text-slate-700 hover:text-slate-900"> 신규 계약·MOU</a>
+        <a href="#business" class="text-sm font-medium text-slate-700 hover:text-slate-900"> 인증·특허 출원</a>
+        <a href="#awards" class="text-sm font-medium text-slate-700 hover:text-slate-900">성과 & 수상</a>
+      </div>
+
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <button class="p-2 rounded-md" aria-label="menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =========================
+       Main content
+       ========================= -->
+  <main id="main" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 py-10">
+
+    <!-- =========================
+         Hero summary card
+         ========================= -->
+    <!-- 기술성과 섹션 -->
+    <section class="mb-10" aria-label="시노펙스 2025 개요">
+      <div class="rounded-xl bg-white shadow-md card-border p-6 md:p-8 section-muted" data-aos="fade-up">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight" style="color:var(--brand)">시노펙스 2025 기술성과 ↔ 검증·사업효과</h1>
+            <p class="mt-2 text-gray-600 max-w-2xl">
+              각 기술성과가 현장에서 검증되고 실질 사업으로 이어진 과정을 한눈에 볼 수 있도록 구성했습니다.
+            </p>
+          </div>
+
+          <div class="flex gap-3 items-center">
+  
+          </div>
+        </div>
+
+        <!-- visual flow cards -->
+        <div class="mt-8 space-y-6">
+          <!-- item 1 -->
+          <div class="flex flex-col md:flex-row gap-4 items-stretch">
+            <div class="flex-1 bg-white p-4 rounded-lg card-border shadow-sm border-l-4 border-[var(--brand)]" data-aos="fade-right" data-aos-delay="50">
+              <h3 class="text-lg font-semibold text-[var(--brand)]">기술성과</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>혈액여과기 CE MDR 인증 신청 완료</li>
+                <li>혈액여과기 임상 성공 및 SCI 논문 게재</li>
+              </ul>
+            </div>
+
+            <div class="h-12 md:h-auto md:w-10 flex items-center justify-center">
+              <div class="grad-line w-full md:h-1 md:w-10 md:rounded-full"></div>
+            </div>
+
+            <div class="flex-1 bg-white p-4 rounded-lg card-border shadow-sm border-l-4 border-emerald-400" data-aos="fade-left" data-aos-delay="100">
+              <h3 class="text-lg font-semibold text-emerald-600">실질 사업 효과</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>비브라운 코리아 공급계약 체결</li>
+                <li>모로코 PRIMEDIC사와 3년간 218만달러 수출 MOU</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- item 2 -->
+          <div class="flex flex-col md:flex-row gap-4 items-stretch">
+            <div class="flex-1 bg-white p-4 rounded-lg card-border shadow-sm border-l-4 border-[var(--brand)]" data-aos="zoom-in" data-aos-delay="120">
+              <h3 class="text-lg font-semibold text-[var(--brand)]">기술성과</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>랩온어칩 혈구분석 카트리지 특허 출원</li>
+                <li>이동형 정수기 식약처 허가 신청</li>
+              </ul>
+            </div>
+
+            <div class="h-12 md:h-auto md:w-10 flex items-center justify-center">
+              <div class="grad-line w-full md:h-1 md:w-10 md:rounded-full"></div>
+            </div>
+
+            <div class="flex-1 bg-white p-4 rounded-lg card-border shadow-sm border-l-4 border-gray-500" data-aos="zoom-in" data-aos-delay="160">
+              <h3 class="text-lg font-semibold text-gray-700">기술 증명</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>KSN 2025, JSHHD 2025 등 학회에서 기술 검증</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- item 3 -->
+          <div class="flex flex-col md:flex-row gap-4 items-stretch">
+            <div class="flex-1 bg-white p-4 rounded-lg card-border shadow-sm border-l-4 border-[var(--brand)]" data-aos="slide-up" data-aos-delay="180">
+              <h3 class="text-lg font-semibold text-[var(--brand)]">기술성과</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>ePTFE 개발 성공 — 반도체·바이오 핵심 필터 국산화</li>
+              </ul>
+            </div>
+
+            <div class="h-12 md:h-auto md:w-10 flex items-center justify-center">
+              <div class="grad-line w-full md:h-1 md:w-10 md:rounded-full"></div>
+            </div>
+
+            <div class="flex-1 bg-white p-4 rounded-lg card-border shadow-sm border-l-4 border-sky-400" data-aos="slide-up" data-aos-delay="220">
+              <h3 class="text-lg font-semibold text-sky-600">기술 증명</h3>
+              <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                <li>SEMICON Korea 2025 등 전시회를 통한 기술 검증</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         1. 기술성과 (Grid)
+         ========================= -->
+    <section id="tech" class="mb-12" aria-label="기술성과">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold" data-aos="fade-right">1. 기술성과</h2>
+          <p class="text-gray-600 mt-2 max-w-2xl">2025년, 시노펙스는 단순한 필터 제조사를 넘어 바이오·필터 분야에서 자립형 핵심소재·기술을 확보했습니다.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- card -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up">
+          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 CE MDR 인증 신청 완료</h4>
+          <p class="text-sm text-gray-600 mt-1">국내 기업 최초로 BSI에 CE MDR 접수 — 11개 제품 대상, IRB 임상 성공 및 SCI 논문으로 성능·안전성 입증.</p>
+          <div class="mt-3 text-xs text-gray-500">성과: 유럽 진출 기반 확보 · 수입 대체 가능</div>
+        </article>
+
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="60">
+          <h4 class="text-lg font-semibold text-[var(--brand)]">이동형 정수기 식약처 허가 신청</h4>
+          <p class="text-sm text-gray-600 mt-1">혈액투석에 필요한 초순수 정재수를 병원이나 가정에서 직접 정수해 공급하는 휴대형 정수 시스템.</p>
+          <div class="mt-3 text-xs text-gray-500">전망: 글로벌 경쟁력 강화 및 재택 혈액투석 시장 진출</div>
+        </article>
+
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="120">
+          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 임상 성공 · SCI 논문 게재</h4>
+          <p class="text-sm text-gray-600 mt-1">50명 대상 다기관 임상, 우수한 독소 제거율 입증 — Kidney Research and Clinical Practice 등재.</p>
+          <div class="mt-3 text-xs text-gray-500">성과: 국내 40개 병원 공급·연 2,400만 개 수입 대체 가능</div>
+        </article>
+
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="180">
+          <h4 class="text-lg font-semibold text-[var(--brand)]">랩온어칩 혈구분석 카트리지 특허 출원</h4>
+          <p class="text-sm text-gray-600 mt-1">마이크로유체 기반 혈액 한 방울로 다중 혈구 분석 — PoC 진단 시장 진입 발판.</p>
+          <div class="mt-3 text-xs text-gray-500">기술: 정밀 미세채널 구조 · 응용: 진단·분석</div>
+        </article>
+
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="240">
+          <h4 class="text-lg font-semibold text-[var(--brand)]">ePTFE 개발 성공</h4>
+          <p class="text-sm text-gray-600 mt-1">30년간 해외 독점 기술을 국산화 — 반도체·디스플레이·바이오용 초정밀 멤브레인 기술 확보, 2026년 양산 목표.</p>
+          <div class="mt-3 text-xs text-gray-500">의의: 공급망 리스크 해소 · 확장: 산업용·바이오용 필터</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================
+         2. 현장 검증 (Events list)
+         ========================= -->
+    <section id="field" class="mb-12" aria-label="현장 검증">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold" data-aos="fade-right">2. 현장 검증</h2>
+          <p class="text-gray-600 mt-2 max-w-2xl">전시회와 학회를 통해 국내외 전문가에게 기술력이 검증된 사례들을 모았습니다.</p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <!-- event 1 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row gap-6 items-center" data-aos="fade-up">
+          <img src="images\semicon.webp" alt="SEMICON Korea 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">SEMICON Korea 2025 (2.19~21, 코엑스)</h3>
+            <p class="text-sm text-gray-600 mt-2">국내 최초 10나노 케미컬 필터 공개 — CMP·Post-CMP 등 첨단 공정 필터 전시로 반도체 공정의 국산화 성공을 부각.</p>
+            <div class="mt-3 text-xs text-gray-500">핵심키워드: 국산화 · 초정밀공정 · 공급망 대응</div>
+          </div>
+        </article>
+
+        <!-- event 2 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row-reverse gap-6 items-center" data-aos="fade-up" data-aos-delay="80">
+          <img src="https://via.placeholder.com/640x360?text=WATER+KOREA+2025" alt="WATER KOREA 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">WATER KOREA 2025 (3.19~21, 킨텍스)</h3>
+            <p class="text-sm text-gray-600 mt-2">PVDF·PAN UF·PES 등 멤브레인 라인업 전시 — 해수담수화, 하폐수, 식음료, 바이오까지 전 산업 적용 솔루션 공개.</p>
+            <div class="mt-3 text-xs text-gray-500">핵심키워드: 수처리 통합 · 기후대응 · 스케일업</div>
+          </div>
+        </article>
+
+        <!-- event 3 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row gap-6 items-center" data-aos="fade-up" data-aos-delay="140">
+          <img src="https://via.placeholder.com/640x360?text=KSN+2025" alt="KSN 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">KSN 2025 대한신장학회 (6.19~22, 코엑스)</h3>
+            <p class="text-sm text-gray-600 mt-2">AI 원격모니터링 이동형 혈액투석기 공개 · Synoflux® 임상결과 발표로 의료계 현장 검증 확보.</p>
+            <div class="mt-3 text-xs text-gray-500">핵심키워드: 임상검증 · 원격모니터링 · 환자접근성</div>
+          </div>
+        </article>
+
+        <!-- event 4 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row-reverse gap-6 items-center" data-aos="fade-up" data-aos-delay="200">
+          <img src="https://via.placeholder.com/640x360?text=JSHHD+2025" alt="JSHHD 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">JSHHD 2025 일본 국제재택혈액투석학회 (9.6~8)</h3>
+            <p class="text-sm text-gray-600 mt-2">Synoflux®의 해외 첫 국제 발표 — 해외 전문가로부터 기술력 인정, 국제적 관심 유도.</p>
+            <div class="mt-3 text-xs text-gray-500">핵심키워드: 해외발표 · 학술신뢰 · 네트워크</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =========================
+         3. 사업 확장성과 (Infographic Cards)
+         ========================= -->
+    <section id="business" class="mb-16" aria-label="사업 확장성">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold" data-aos="fade-right">3. 사업 확장성과</h2>
+          <p class="text-gray-600 mt-2 max-w-2xl">검증된 기술은 성과로 연결되었습니다. 주요 사업성과를 인포그래픽 카드로 정리합니다.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- card 1: carbon with animated counter -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="text-lg font-semibold">① 탄소배출권 획득</h4>
+              <p class="text-sm text-gray-600 mt-1">인도네시아 정수장으로 탄소배출권 21년간 258000톤 획득 </p>
+            </div>
+            <div class="text-2xl font-bold text-gray-800" aria-hidden="true">
+              <span id="carbonCount" data-count-target="258000">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- card 2 -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in" data-aos-delay="80">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-semibold">② 혈액여과기 수출 MOU</h4>
+              <p class="text-sm text-gray-600 mt-1">모로코 PRIMEDIC사와 3년간 총 218만 달러 규모의 수출 MOU 체결.</p>
+            </div>
+            <div class="text-2xl font-bold">$218k</div>
+          </div>
+        </div>
+
+        <!-- card 3 -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in" data-aos-delay="160">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-semibold">③ 탄소저감형 MF필터 국책과제 선정</h4>
+              <p class="text-sm text-gray-600 mt-1">환경공단 지원사업 선정 — 2027년까지 전력소비 21% 저감 MF 시스템 개발 목표.</p>
+            </div>
+            <div class="text-2xl font-bold"></div>
+          </div>
+        </div>
+
+        <!-- card 4 -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in" data-aos-delay="220">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-semibold">④ 삼성전자 상생협력 우수상</h4>
+              <p class="text-sm text-gray-600 mt-1">FPCB 자동화 라인 품질 개선으로 상생협력 우수상 수상.</p>
+            </div>
+            <div class="text-2xl font-bold">🏆</div>
+          </div>
+        </div>
+
+        <!-- card 5 -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in" data-aos-delay="280">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-semibold">⑤ 힐넥서스 제휴</h4>
+              <p class="text-sm text-gray-600 mt-1">여행투석 플랫폼과 제휴, AI 기반 '넥스케어'로 환자 접근성 혁신 준비.</p>
+            </div>
+            <div class="text-2xl font-bold"></div>
+          </div>
+        </div>
+
+        <!-- card 6 -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in" data-aos-delay="340">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-semibold">⑥ 롯데케미칼 수처리사업 인수</h4>
+              <p class="text-sm text-gray-600 mt-1">MBR막 포함 수처리 전 부문 인수로 토탈 수처리 솔루션 포트폴리오 완성.</p>
+            </div>
+            <div class="text-2xl font-bold"></div>
+          </div>
+        </div>
+
+        <!-- card 7 -->
+        <div class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="zoom-in" data-aos-delay="400">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-semibold">⑦ 비브라운 코리아 공급계약</h4>
+              <p class="text-sm text-gray-600 mt-1">2025.10.24 본계약 체결 — 비브라운의 유통망을 통해 국내외 공급망 강화.</p>
+            </div>
+            <div class="text-2xl font-bold"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================
+         Call-to-action section
+         ========================= -->
+    <section class="mb-24 p-6 rounded-2xl bg-[linear-gradient(180deg,#f7fbff,transparent)] card-border text-center" data-aos="fade-up">
+      <h3 class="text-2xl font-semibold text-[var(--brand)]">시노펙스는 성과로 증명합니다</h3>
+      <p class="text-sm text-gray-600 mt-3">기술의 탄생, 현장검증, 그리고 시장 확장 — 3단 스토리 플로우로 연결되는 여정에 함께해 주세요.</p>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="#tech" class="px-4 py-2 rounded-md border border-[var(--brand)] text-[var(--brand)]">시노펙스 2025 한눈에 보기</a>
+        <a href="#business" class="px-4 py-2 rounded-md bg-[var(--brand)] text-white">사업 성과 자세히</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================
+       Footer
+       ========================= -->
+  <footer class="bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-500">© 2025 SYNOPEX. All rights reserved.</div>
+      <div class="text-sm text-gray-400">Design & content: SYNOPEX — For internal newsletter</div>
+    </div>
+  </footer>
+
+  <!-- =========================
+       Scripts: AOS + UI behaviors
+       ========================= -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // AOS init with moderate duration. Using a mixture of fade/zoom/slide via data-aos attributes in HTML.
+    AOS.init({
+      duration: 700,
+      once: true,
+      anchorPlacement: 'top-bottom',
+      easing: 'ease-out-cubic'
+    });
+
+    // Mobile nav toggle
+  /* DOMContentLoaded 이벤트 바깥쪽, 기존 메뉴 JS 코드 블록을 대체합니다. */
+const menuBtn = document.querySelector('button[aria-label="menu"]');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeBtn = document.getElementById('closeMenu');
+const overlay = document.getElementById('menuOverlay');
+
+// 메뉴 닫기 로직을 함수로 정의하여 재사용성을 높입니다.
+const closeMobileMenu = () => {
+    // 1. 모바일 메뉴 닫기
+    mobileMenu.classList.remove('opacity-100'); 
+    mobileMenu.classList.add('translate-x-full', 'opacity-0');
+    
+    // 2. 🔥 오버레이(배경) 비활성화
+    overlay.classList.remove('opacity-100');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+};
+
+
+// 메뉴 열기
+menuBtn.addEventListener('click', () => {
+    // 1. 모바일 메뉴 열기
+    mobileMenu.classList.remove('translate-x-full', 'opacity-0'); 
+    mobileMenu.classList.add('opacity-100');
+    
+    // 2. 🔥 오버레이(배경) 활성화
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.add('opacity-100'); 
+});
+
+// 메뉴 닫기 (닫기 버튼)
+closeBtn.addEventListener('click', closeMobileMenu);
+
+// 오버레이 클릭 시 메뉴 닫기
+overlay.addEventListener('click', closeMobileMenu);
+
+// 메뉴 항목 클릭 시 닫기
+document.querySelectorAll('#mobileMenu a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        closeMobileMenu(); // 메뉴를 닫습니다.
+
+        // 스크롤 로직을 비동기로 처리하여 메뉴 닫힘 애니메이션을 기다립니다.
+        const href = link.getAttribute('href');
+        const target = document.querySelector(href);
+        if(target && href.startsWith('#')) {
+            e.preventDefault(); 
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+            }, 500); // 500ms는 메뉴 닫힘 애니메이션 시간과 일치시킵니다 (CSS duration-500).
+        }
+    });
+});
+
+    // Intersection Observer based count-up animation
+    function animateNumber(el, target, duration = 1200) {
+      const start = 0;
+      const range = target - start;
+      const startTime = performance.now();
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutQuad
+        const eased = 1 - (1 - progress) * (1 - progress);
+        const value = Math.floor(start + (range * eased));
+        el.textContent = value.toLocaleString();
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Observe elements with data-count-target
+    const countEls = document.querySelectorAll('[data-count-target]');
+    if ('IntersectionObserver' in window && countEls.length) {
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.getAttribute('data-count-target') || '0', 10);
+            animateNumber(el, target, 1500);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.4 });
+      countEls.forEach(el => obs.observe(el));
+    } else {
+      // fallback if no IntersectionObserver
+      countEls.forEach(el => {
+        const target = parseInt(el.getAttribute('data-count-target') || '0', 10);
+        animateNumber(el, target, 1500);
+      });
+    }
+
+    // Accessibility: ensure images with placeholder have alt; nothing else required.
+  </script>
+</body>
+</html>
