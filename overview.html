@@ -10,7 +10,76 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.8/countUp.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const sections = ['tech', 'validation', 'business', 'awards'];
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        function setActiveNav() {
+          const scrollPosition = window.scrollY;
+          
+          // 각 섹션의 위치를 확인하고 가장 가까운 섹션을 찾음
+          let currentSection = sections[0];
+          let minDistance = Infinity;
+          
+          sections.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              const distance = Math.abs(section.getBoundingClientRect().top);
+              if (distance < minDistance) {
+                minDistance = distance;
+                currentSection = sectionId;
+              }
+            }
+          });
+          
+          // 활성 상태 업데이트
+          navItems.forEach(item => {
+            const href = item.getAttribute('href').slice(1);
+            if (href === currentSection) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+        
+        // 스크롤 이벤트에 쓰로틀링 적용
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              setActiveNav();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+        
+        // 페이지 로드 시 실행
+        setActiveNav();
+        
+        // 네비게이션 클릭 시 부드러운 스크롤
+        navItems.forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = item.getAttribute('href').slice(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+              const headerOffset = 100; // 네비게이션 바 높이 + 여유 공간
+              const elementPosition = targetSection.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
+    </script>
+    <style>
       /* CSS 변수: 웹페이지 전체에서 사용할 색상 정의 */
       :root{
       --brand: #0971C2;
@@ -98,6 +167,34 @@
 
   /* Ensure inline SVGs inside cards are consistent */
   .card svg { width: 24px; height: 24px; }
+
+  /* Navigation active state */
+  .nav-item {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-item:after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--brand);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-item.active {
+    color: var(--brand);
+    font-weight: 600;
+    transform: scale(1.1);
+  }
+  
+  .nav-item.active:after {
+    transform: scaleX(1);
+  }
     
     /* 모바일 메뉴 애니메이션 관련 스타일 */
     .menu-enter { transform: translateY(-10px); opacity: 0; }
@@ -271,10 +368,10 @@ margin-bottom: 8px;
 
     <!-- 메뉴 -->
     <div class="hidden md:flex items-center gap-7 lg:gap-8">
-      <a href="#tech" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">전시 & 학술대회</a>
-      <a href="#validation" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">신규 계약·MOU</a>
-      <a href="#business" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">인증·특허 출원</a>
-      <a href="#awards" class="text-sm md:text-base font-medium text-slate-700 hover:text-slate-900">성과 & 수상</a>
+      <a href="#tech" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">전시 & 학술대회</a>
+      <a href="#validation" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">신규 계약·MOU</a>
+      <a href="#business" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">인증·특허 출원</a>
+      <a href="#awards" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">성과 & 수상</a>
     </div>
 
     <!-- 메뉴 버튼 -->

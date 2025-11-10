@@ -76,7 +76,65 @@
     /* small responsive tweaks for images inside list cards */
     .card-image-cover { min-height: 120px; object-fit: cover; width: 100%; border-radius: .5rem; }
     
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--brand);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .nav-item.active {
+      color: var(--brand);
+      font-weight: 600;
+      transform: scale(1.1);
+    }
+    
+    .nav-item.active:after {
+      transform: scaleX(1);
+    }
   </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('section[id]');
+      const navItems = document.querySelectorAll('.nav-item');
+      
+      function setActiveNav() {
+        let current = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 150;
+          const sectionHeight = section.offsetHeight;
+          if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('href').slice(1) === current) {
+            item.classList.add('active');
+          }
+        });
+      }
+      
+      // 스크롤 시 실행
+      window.addEventListener('scroll', setActiveNav);
+      
+      // 초기 로드 시 실행
+      setActiveNav();
+    });
+  </script>
 </head>
 <body class="antialiased">
 
@@ -108,8 +166,8 @@
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"> <img src="images\synopex_ci_e (2) 2.png"></div>
           <div class="hidden sm:block"> 
-            <div class="text-sm font-bold">2025 SYNOPEX NEWSLETTER</div>
-            <div class="text-xs small-muted">시노펙스 2025 한해를 한눈에</div>
+           <div class="text-base md:text-lg font-bold leading-tight">2025 SYNOPEX NEWSLETTER</div>
+        <div class="text-xs md:text-sm small-muted">시노펙스 2025 한해를 한눈에</div>
           </div>
           <div class="block sm:hidden text-sm font-bold truncate max-w-[150px]">
             SYNOPEX NEWSLETTER
@@ -117,10 +175,10 @@
         </div>
       </div>
 
-      <div class="hidden md:flex items-center gap-6">
-        <a href="#tech" class="nav-link text-sm font-medium text-slate-700 hover:text-slate-900">기술성과</a>
-        <a href="#field" class="nav-link text-sm font-medium text-slate-700 hover:text-slate-900">현장검증</a>
-        <a href="#business" class="nav-link text-sm font-medium text-slate-700 hover:text-slate-900"> 사업 확장성과</a>
+      <div class="hidden md:flex items-center gap-7 lg:gap-8">
+        <a href="#tech" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">1. 기술성과</a>
+        <a href="#field" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">2. 현장검증</a>
+        <a href="#business" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">3. 사업 확장성과</a>
       </div>
 
       <div class="flex items-center gap-3 flex-shrink-0">
