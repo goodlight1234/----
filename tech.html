@@ -67,6 +67,7 @@
  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
  border: 1px solid rgba(0,0,0,0.04);
  }
+ 
 
     /* reduced motion support */
     @media (prefers-reduced-motion: reduce){
@@ -102,6 +103,57 @@
     .nav-item.active:after {
       transform: scaleX(1);
     }
+      .card-border {
+    border: 1px solid rgba(9,113,194,0.06);
+    transition: all 0.3s ease;
+  }
+
+  .card-border:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  .card-image-cover {
+    width: 100%;
+    height: 10rem; /* h-40 */
+    object-fit: cover;
+    border-radius: .5rem;
+  }
+
+  .card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: .5rem;
+  }
+
+  /* subtle overlay for readability */
+  .card-img-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0));
+  }
+
+  /* responsive card layout */
+  .tech-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .tech-card {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .tech-card img {
+      width: 45%;
+      height: auto;
+    }
+  }
+
+
   </style>
   
   <script>
@@ -290,172 +342,127 @@
     <!-- =========================
          1. 기술성과 (Grid)
          ========================= -->
-    <section id="tech" class="mb-12" aria-label="기술성과">
-      <div class="flex items-start justify-between mb-6">
+   <section id="tech" class="mb-12" aria-label="기술성과">
+  <div class="flex items-start justify-between mb-6">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-4" data-aos="fade-right">1. 기술성과</h2>
+      <p class="text-gray-600 max-w-2xl">2025년, 시노펙스는 단순한 필터 제조사를 넘어 바이오·필터 분야에서 자립형 핵심소재·기술을 확보했습니다.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- CE MDR 인증 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images/ce_mdr.jpg" alt="CE MDR 인증" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
         <div>
-          <h2 class="text-2xl md:text-3xl font-bold mb-4" data-aos="fade-right">1. 기술성과</h2>
-          <p class="text-gray-600 max-w-2xl whitespace-nowrap">2025년, 시노펙스는 단순한 필터 제조사를 넘어 바이오·필터 분야에서 자립형 핵심소재·기술을 확보했습니다.</p>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 CE MDR 인증 신청 완료</h4>
+          <p class="text-sm text-gray-600 mt-2">국내 기업 최초로 BSI에 CE MDR 접수 진행</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>11개 제품 대상 인증 신청</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>3개 병원 IRB 임상 성공</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>SCI 논문으로 성능·안전성 입증</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">유럽 진출</span>
+          <span class="pill text-xs">수입 대체</span>
         </div>
       </div>
+    </article>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- CE MDR 인증 카드 -->
-        <article class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-              <span class="text-2xl">🏅</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 CE MDR 인증 신청 완료</h4>
-              <p class="text-sm text-gray-600 mt-2">국내 기업 최초로 BSI에 CE MDR 접수 진행</p>
-              <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  11개 제품 대상 인증 신청
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  3개 병원 IRB 임상 성공
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  SCI 논문으로 성능·안전성 입증
-                </li>
-              </ul>
-              <div class="mt-4 flex gap-2">
-                <span class="pill text-xs">유럽 진출</span>
-                <span class="pill text-xs">수입 대체</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 식약처 허가 카드 -->
-        <article class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="60">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-              <span class="text-2xl">🔬</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="text-lg font-semibold text-[var(--brand)]">이동형 정수기 식약처 허가 신청</h4>
-              <p class="text-sm text-gray-600 mt-2">KMDF 국책과제 선정작</p>
-              <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  초소형 크기 (250×475×675mm)
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  재택 혈액투석 지원
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  자체 전처리 필터 내장
-                </li>
-              </ul>
-              <div class="mt-4 flex gap-2">
-                <span class="pill text-xs">이동성</span>
-                <span class="pill text-xs">재택의료</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 혈액여과기 임상 카드 -->
-        <article class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="120">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-              <span class="text-2xl">📊</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 임상 성공 · SCI 논문 게재</h4>
-              <p class="text-sm text-gray-600 mt-2">Kidney Research and Clinical Practice 등재</p>
-              <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  50명 대상 다기관 임상 완료
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  글로벌 제품 대비 우수한 성능
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  국내 40개 병원 공급 중
-                </li>
-              </ul>
-              <div class="mt-4 flex gap-2">
-                <span class="pill text-xs">임상 검증</span>
-                <span class="pill text-xs">SCI 등재</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- 랩온어칩 특허 출원 카드 -->
-        <article class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="180">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-              <span class="text-2xl">🧪</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="text-lg font-semibold text-[var(--brand)]">랩온어칩 혈구분석 카트리지 특허 출원</h4>
-              <p class="text-sm text-gray-600 mt-2">마이크로유체 기반 혈액 한 방울로 다중 혈구 분석 — PoC 진단 시장 진입 발판.</p>
-              <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  정밀 미세채널 설계 기반 데이터 일관성 확보
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  소량 혈액(한 방울)으로 다중 분석 가능
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  PoC 및 이동형 진단기 통합 가능성
-                </li>
-              </ul>
-              <div class="mt-4 flex gap-2">
-                <span class="pill text-xs">특허 출원</span>
-                <span class="pill text-xs">진단 혁신</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ePTFE 개발 카드 -->
-        <article class="p-6 rounded-xl bg-white shadow-sm card-border" data-aos="fade-up" data-aos-delay="240">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-              <span class="text-2xl">🔧</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="text-lg font-semibold text-[var(--brand)]">ePTFE 개발 성공</h4>
-              <p class="text-sm text-gray-600 mt-2">30년간 해외 독점 기술을 극복하고 국산화에 성공</p>
-              <ul class="mt-3 space-y-2 text-sm text-gray-600">
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  반도체용 10나노급 필터 구현
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  Full In-House 생산체계 구축
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                  2026년 양산 목표
-                </li>
-              </ul>
-              <div class="mt-4 flex gap-2">
-                <span class="pill text-xs">기술 자립</span>
-                <span class="pill text-xs">소재 혁신</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
+    <!-- 식약처 허가 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images/fda_water.jpg" alt="이동형 정수기 식약처 허가" class="card-image-cover">
       </div>
-    </section>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">이동형 정수기 식약처 허가 신청</h4>
+          <p class="text-sm text-gray-600 mt-2">KMDF 국책과제 선정작</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>초소형 크기 (250×475×675mm)</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>재택 혈액투석 지원</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>자체 전처리 필터 내장</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">이동성</span>
+          <span class="pill text-xs">재택의료</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 혈액여과기 임상 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images/clinical.jpg" alt="혈액여과기 임상" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 임상 성공 · SCI 논문 게재</h4>
+          <p class="text-sm text-gray-600 mt-2">Kidney Research and Clinical Practice 등재</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>50명 대상 다기관 임상 완료</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>글로벌 제품 대비 우수한 성능</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>국내 40개 병원 공급 중</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">임상 검증</span>
+          <span class="pill text-xs">SCI 등재</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 랩온어칩 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="240">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images/labonchip.jpg" alt="랩온어칩 특허 출원" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">랩온어칩 혈구분석 카트리지 특허 출원</h4>
+          <p class="text-sm text-gray-600 mt-2">마이크로유체 기반 혈액 한 방울로 다중 혈구 분석 — PoC 진단 시장 진입 발판.</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>정밀 미세채널 설계 기반 데이터 일관성 확보</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>소량 혈액(한 방울)으로 다중 분석 가능</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>PoC 및 이동형 진단기 통합 가능성</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">특허 출원</span>
+          <span class="pill text-xs">진단 혁신</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ePTFE 개발 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="320">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images/eptfe.jpg" alt="ePTFE 개발 성공" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">ePTFE 개발 성공</h4>
+          <p class="text-sm text-gray-600 mt-2">30년간 해외 독점 기술을 극복하고 국산화에 성공</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>반도체용 10나노급 필터 구현</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>Full In-House 생산체계 구축</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>2026년 양산 목표</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">기술 자립</span>
+          <span class="pill text-xs">소재 혁신</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 
     <!-- =========================
          2. 현장 검증 (Events list)
