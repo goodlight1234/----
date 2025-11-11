@@ -12,37 +12,33 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const sections = ['tech', 'validation', 'business', 'awards'];
+        const sections = ['hero', 'tech', 'validation', 'business', 'awards'];
         const navItems = document.querySelectorAll('.nav-item');
         
-        function setActiveNav() {
-          const scrollPosition = window.scrollY;
-          
-          // 각 섹션의 위치를 확인하고 가장 가까운 섹션을 찾음
-          let currentSection = sections[0];
-          let minDistance = Infinity;
-          
-          sections.forEach(sectionId => {
-            const section = document.getElementById(sectionId);
-            if (section) {
-              const distance = Math.abs(section.getBoundingClientRect().top);
-              if (distance < minDistance) {
-                minDistance = distance;
-                currentSection = sectionId;
-              }
-            }
-          });
-          
-          // 활성 상태 업데이트
-          navItems.forEach(item => {
-            const href = item.getAttribute('href').slice(1);
-            if (href === currentSection) {
-              item.classList.add('active');
-            } else {
-              item.classList.remove('active');
-            }
-          });
-        }
+       function setActiveNav() {
+  let currentSection = "";
+
+  sections.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const sectionTop = section.offsetTop - 150; // 헤더 높이만큼 보정
+      const sectionHeight = section.offsetHeight;
+
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        currentSection = sectionId;
+      }
+    }
+  }); 
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+    currentSection = sections[sections.length - 1];
+  }
+
+  navItems.forEach(item => {
+    const href = item.getAttribute('href').slice(1);
+    item.classList.toggle('active', href === currentSection);
+  });
+}
+
         
         // 스크롤 이벤트에 쓰로틀링 적용
         let ticking = false;
