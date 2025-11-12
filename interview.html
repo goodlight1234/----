@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=900">
+    <title>시노펙스 2025 한해를 한눈에</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.8/countUp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script>
+        // DOMContentLoaded 이벤트 리스너 통합 (모든 JS 로직 포함)
+        document.addEventListener('DOMContentLoaded', function() {
+            // ----------------------------------------------------
+            // 🧭 네비게이션 활성화 로직
+            // ----------------------------------------------------
+            const sections = ['hero', 'tech', 'validation', 'business', 'awards'];
+            const navItems = document.querySelectorAll('.nav-item');
+
+            function setActiveNav() {
+                let currentSection = "";
+                const headerOffset = 100; // 헤더 높이만큼 보정
+
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const sectionTop = section.offsetTop - headerOffset;
+                        const sectionHeight = section.offsetHeight;
+
+                        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                            currentSection = sectionId;
+                        }
+                    }
+                });
+
+                // 페이지 하단에 도달했을 때 마지막 섹션 강제 활성화
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+                    currentSection = sections[sections.length - 1];
+                }
+
+                navItems.forEach(item => {
+                    const href = item.getAttribute('href').slice(1);
+                    item.classList.toggle('active', href === currentSection);
+                });
+            }
+
+            // 스크롤 이벤트에 쓰로틀링 적용
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        setActiveNav();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // 페이지 로드 시 실행
+            setActiveNav();
+
+            // 네비게이션 클릭 시 부드러운 스크롤
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = item.getAttribute('href').slice(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const headerOffset = 100; // 네비게이션 바 높이 + 여유 공간
+                        const elementPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // ----------------------------------------------------
+            // 🌟 AOS 초기화
+            // ----------------------------------------------------
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false,
+                offset: 60
+            });
+
+            // ----------------------------------------------------
+            // 🔢 CountUp.js 초기화 함수
+            // ----------------------------------------------------
+            const countUpInstances = {};
+
+            function tryInitCountUps() {
+                if (typeof CountUp === 'undefined') return;
+
+                document.querySelectorAll('.card-value').forEach(el => {
+                    const target = Number(el.getAttribute('data-count') || 0);
+                    const id = el.id || el.className + target; // 고유 ID 생성 (클래스+값으로 임시 지정)
+
+                    if (isNaN(target) || countUpInstances[id]) return;
+
+                    const c = new CountUp(el, target, { duration: 2.4, separator: ',' });
+                    countUpInstances[id] = c; // 인스턴스 저장
+
+                    // AOS 애니메이션이 시작될 때 CountUp 시작
+                    if (!el.classList.contains('counted')) {
+                        el.addEventListener('aos:in', () => {
+                            if (!el.classList.contains('counted')) {
+                                c.start();
+                                el.classList.add('counted');
+                            }
+                        });
+                    }
+                });
+            }
+            tryInitCountUps(); // 페이지 로드 시 한 번 실행
+
+            // ----------------------------------------------------
+            // 📈 Chart.js 설정
+            // ----------------------------------------------------
+
+            // 🌟 1. 라인 차트 (lineChart) 설정 (매출액 추이 - 분기 데이터 채택) 🌟
+            const lineCtx = document.getElementById('lineChart');
+            if (lineCtx) {
+                new Chart(lineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['24.4Q', '25.1Q', '25.2Q', '25.3Q', '25.4Q'],
+                        datasets: [{
+                            label: '매출액 (억 원)',
+                            data: [55400, 58800, 61200, 64500, 67652],
+                            borderColor: '#0f62fe',
+                            fill: true,
+                            tension: 0.4,
+                            backgroundColor: 'rgba(15,98,254,0.1)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            tooltip: { callbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.formattedValue + '억 원' } }
+                        },
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { beginAtZero: false, grid: { color: 'rgba(10,10,10,0.04)' } }
+                        }
+                    }
+                });
+            }
+
+            // 🌟 2. 영역 차트 (Area Chart - validation) 설정 🌟 (HTML에 해당 canvas가 없으므로 작동하지 않음)
+            // const areaCanvas = document.getElementById('areaChart'); // 해당 canvas는 HTML에 없어 주석 처리
+
+            // ----------------------------------------------------
+            // 📱 모바일 메뉴 제어 로직
+            // ----------------------------------------------------
+            const menuBtn = document.getElementById('openMenu'); // 햄버거 버튼에 ID 부여
+            const mobileMenu = document.getElementById("mobileMenu");
+            const overlay = document.getElementById("menuOverlay");
+            const closeBtn = document.getElementById("closeMenu");
+
+            const openMenu = () => {
+                mobileMenu.classList.remove("translate-x-full");
+                overlay.classList.remove("opacity-0", "pointer-events-none");
+                overlay.classList.add("opacity-100");
+            };
+
+            const closeMenu = () => {
+                mobileMenu.classList.add("translate-x-full");
+                overlay.classList.add("opacity-0", "pointer-events-none");
+                overlay.classList.remove("opacity-100");
+            };
+
+            if (menuBtn && mobileMenu && overlay && closeBtn) {
+                menuBtn.addEventListener("click", openMenu);
+                closeBtn.addEventListener("click", closeMenu);
+                overlay.addEventListener("click", closeMenu);
+
+                document.querySelectorAll("#mobileMenu a").forEach(link => {
+                    link.addEventListener("click", (e) => {
+                        const href = link.getAttribute("href");
+                        if (href.startsWith("#")) {
+                            e.preventDefault();
+                            closeMenu();
+                            const target = document.querySelector(href);
+                            if (target) {
+                                // 부드러운 스크롤을 위해 setTimeout 제거
+                                const headerOffset = 100;
+                                const elementPosition = target.getBoundingClientRect().top;
+                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                                window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        } else {
+                            closeMenu();
+                        }
+                    });
+                });
+            }
+
+            // ----------------------------------------------------
+            // 🔼 스크롤 버튼 제어 로직
+            // ----------------------------------------------------
+            const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+            window.onscroll = function() {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollTopBtn.style.display = "flex"; // flex로 변경하여 가운데 정렬
+                } else {
+                    scrollTopBtn.style.display = "none";
+                }
+            };
+
+            // 버튼 클릭 시 맨 위로 이동
+            scrollTopBtn.addEventListener("click", function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        });
+    </script>
+    <style>
+        /* CSS 변수: 웹페이지 전체에서 사용할 색상 정의 */
+        :root {
+            --brand: #0971C2;
+            --muted: #f7fbff;
+            --sinofex-blue: #0f62fe;
+            /* 시노펙스 메인 블루 */
+            --sinofex-deep: #073b8a;
+            /* 시노펙스 딥 블루 */
+        }
+
+        /* HTML/Body 스타일: 폰트 설정, 배경색, 글자색, 핵심: 가로 스크롤 방지 */
+        html,
+        body {
+            font-family: 'Noto Sans KR', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, "Helvetica Neue";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #ffffff;
+            color: #1f2937;
+            /* text-gray-800 */
+            /* Base font increased for better readability and consistent scaling */
+            font-size: 18px;
+            line-height: 1.6;
+            /* Prevent horizontal scroll */
+            overflow-x: hidden;
+        }
+
+        /* Glass Card 스타일 (.card): 투명한 유리 느낌의 카드 디자인 */
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.72));
+            backdrop-filter: blur(6px);
+            /* 블러 효과 */
+            border: 1px solid rgba(15, 98, 254, 0.08);
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(15, 98, 254, 0.06);
+            transition: transform .35s cubic-bezier(.2, .9, .2, 1), box-shadow .35s;
+            /* 호버 애니메이션 준비 */
+        }
+
+        /* Card 호버 효과: 마우스를 올렸을 때 살짝 올라오는 애니메이션 */
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 18px 40px rgba(15, 98, 254, 0.14);
+        }
+
+        /* Glow Accent (.accent-glow): 카드의 테두리에 은은한 빛 효과 추가 */
+        .accent-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            z-index: -1;
+            border-radius: 16px;
+            background: linear-gradient(90deg, rgba(15, 98, 254, 0.08), rgba(7, 59, 138, 0.06));
+            filter: blur(16px);
+            opacity: 0.9;
+        }
+
+        /* 시노펙스 구분선 (.sinofex-hr): 파란색 그라데이션이 적용된 가로선 */
+        .sinofex-hr {
+            height: 4px;
+            background: linear-gradient(90deg, var(--sinofex-blue), var(--sinofex-deep));
+            border-radius: 6px;
+            width: 64px;
+        }
+
+        /* 작은 텍스트 색상 (.small-muted) */
+        .small-muted {
+            color: #4b5563;
+            font-size: .95rem
+        }
+
+        /* 카드 내 주요 숫자 값 스타일 (.card-value) 및 반응형 폰트 크기 */
+        .card-value {
+            font-weight: 700;
+            color: var(--sinofex-deep);
+            font-size: 1.2rem
+        }
+
+        @media (min-width:1024px) {
+            .card-value {
+                font-size: 1.8rem
+            }
+        }
+
+        /* 데스크톱에서 더 크게 */
+
+        /* 섹션 간격 (.section) */
+        .section {
+            padding: 3.5rem 0
+        }
+
+        /* 차트 컨테이너 (.chart-wrap): 반응형 높이 설정 (차트가 찌그러지지 않도록) */
+        .chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 320px
+        }
+
+        @media (max-width:768px) {
+            .chart-wrap {
+                height: 260px
+            }
+        }
+
+        @media (max-width:480px) {
+            .chart-wrap {
+                height: 200px
+            }
+        }
+
+        /* 네비게이션바 블러 효과 (.nav-blur) */
+        .nav-blur {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+            backdrop-filter: blur(6px);
+        }
+
+        /* 강조용 칩/알약 스타일 (.pill) */
+        .pill {
+            background: linear-gradient(90deg, rgba(15, 98, 254, 0.08), rgba(7, 59, 138, 0.03));
+            color: var(--sinofex-deep);
+            padding: .4rem .7rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: .95rem
+        }
+
+        /* 작은 아이콘 크기 (.icon-sm) */
+        .icon-sm {
+            width: 22px;
+            height: 22px
+        }
+
+        /* activity card icon */
+        .activity-icon {
+            font-size: 28px;
+        }
+
+        /* Ensure inline SVGs inside cards are consistent */
+        .card svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Navigation active state */
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--brand);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--brand);
+            font-weight: 600;
+            transform: scale(1.05); /* 약간만 확대하여 자연스럽게 */
+        }
+
+        .nav-item.active:after {
+            transform: scaleX(1);
+        }
+
+        /* 모바일 메뉴 애니메이션 관련 스타일 */
+        .menu-enter {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+
+        .menu-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.3s ease-in-out;
+        }
+
+
+        .chart-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .activity-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.72));
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 98, 254, 0.08);
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(15, 98, 254, 0.06);
+            padding: 24px 10px;
+            text-align: center;
+            transition: transform .35s cubic-bezier(.2, .9, .2, 1), box-shadow .35s;
+            height: 160px;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(15, 98, 254, 0.12);
+        }
+
+        .activity-icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+            color: var(--sinofex-deep);
+            /* 브랜드 톤에 맞춰 블루 통일 */
+        }
+
+        .activity-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 6px;
+        }
+
+        .activity-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--sinofex-deep);
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .activity-section {
+            margin-top: 40px;
+            /* ✅ 두 섹션 사이 간격 */
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        /* Improved network item readability: left-aligned, larger body text and clearer title */
+        .network-item {
+            background: #fff;
+            border: 1px solid #e6eefc;
+            border-radius: 14px;
+            padding: 20px 22px;
+            text-align: left;
+            box-shadow: 0 6px 16px rgba(7, 59, 138, 0.04);
+            transition: all 0.25s ease;
+            color: #374151;
+            /* dark gray for body text */
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .network-item:hover {
+            box-shadow: 0 12px 28px rgba(7, 59, 138, 0.06);
+            transform: translateY(-4px);
+        }
+
+        /* Make the partner/title label more prominent and in brand color */
+        .network-title {
+            display: block;
+            font-weight: 700;
+            color: var(--sinofex-deep);
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+        }
+
+        /* Validation section header color (신규 계약·MOU) */
+        #validation h2 {
+            color: var(--sinofex-deep);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        /* 기존 카드 스타일 (220px 이상 반응형 카드) */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .card h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.125rem;
+            /* ~20px for headings */
+            line-height: 1.25;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.06);
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .desc {
+            margin: 6px 0 0 0;
+            color: #222;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* 스크롤 버튼 스타일 재정의 및 중복 코드 제거 */
+        #scrollTopBtn {
+            display: none;
+            /* JS에서 block/flex로 제어 */
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 100;
+            background-color: #0f62fe;
+            /* 시노펙스 블루 */
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollTopBtn:hover {
+            background-color: #073b8a;
+            transform: translateY(-3px) scale(1.05);
+        }
+    </style>
+
+</head>
+
+<body class="antialiased">
+    <div id="menuOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 z-40"></div>
+
+    <div id="mobileMenu"
+        class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/70 backdrop-blur-lg shadow-xl z-50 transform translate-x-full transition-transform duration-500 ease-in-out">
+        <div class="p-6 space-y-6 text-lg font-medium text-slate-800">
+            <a href="#hero" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
+            <a href="https://goodlight1234.github.io/synopex2025/tech.html" class="block hover:text-blue-600">2) 기술 & 마케팅 활동</a>
+            <a href="#validation" class="block hover:text-blue-600">3) 임직원 인터뷰</a>
+            <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
+            <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
+            <a href="#news" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
+
+            <button id="closeMenu"
+                class="mt-8 w-full px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
+                닫기
+            </button>
+        </div>
+    </div>
+
+    <header class="fixed w-full z-40 top-4 left-0 px-4">
+        <nav class="max-w-6xl mx-auto flex items-center justify-between p-3 md:p-4 rounded-xl nav-blur card">
+            <div class="flex items-center gap-3 md:gap-4">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <img src="https://via.placeholder.com/40x40?text=SINO" alt="Synopex CI">
+                </div>
+
+                <div class="hidden sm:block">
+                    <div class="text-base md:text-lg font-bold leading-tight">2025 SYNOPEX NEWSLETTER</div>
+                    <div class="text-xs md:text-sm small-muted">시노펙스 2025 한해를 한눈에</div>
+                </div>
+
+                <div class="block sm:hidden text-sm md:text-base font-bold truncate max-w-[150px]">
+                    SYNOPEX NEWSLETTER
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-5 whitespace-nowrap">
+                <a href="#tech" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">연구개발</a>
+                <a href="#validation" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">글로벌 마케팅</a>
+                <a href="#business" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">생산·품질</a>
+                <a href="#awards" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">경영 & 비전</a>
+            </div>
+
+            <a id="openMenu" class="p-2 rounded-md cursor-pointer flex items-center justify-center" aria-label="menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm md:w-6 md:h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+
+    <main>
+        <section id="hero" class="pt-32 pb-24 bg-gradient-to-b from-white to-gray-50">
+            <div class="max-w-6xl mx-auto px-4 text-center">
+                <div class="text-sm tracking-widest text-blue-600 font-semibold mb-3" data-aos="fade-up">
+                    2025 SPECIAL REPORT
+                </div>
+                <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight" data-aos="fade-up"
+                    data-aos-delay="100">
+                    시노펙스 인사이드
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-700 mt-4 max-w-3xl mx-auto" data-aos="fade-up"
+                    data-aos-delay="200">
+                    2025년, 성과를 이끈 임직원들의 이야기와 2026년을 향한 비전
+                </p>
+                <div class="sinofex-hr mx-auto mt-6 mb-10" data-aos="fade-up" data-aos-delay="300"></div>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="400">
+                    도전과 혁신의 현장에서 활약한 시노펙스 주요 구성원들의 생생한 인터뷰를 통해
+                    한 해의 성과와 다음 단계의 방향성을 함께 살펴봅니다.
+                </p>
+            </div>
+        </section>
+
+        <section id="tech" class="section">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
+                    1. 석유민 센터장님-EPTFE 소재 국산화
+                </h2>
+                <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
+
+                <div class="card p-6 md:p-10 mb-12 shadow-lg bg-blue-50/40" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                        <img src="https://via.placeholder.com/150x150?text=R%26D+Chief" alt="R&D 인터뷰"
+                            class="rounded-full w-24 h-24 flex-shrink-0 object-cover border-4 border-blue-100">
+                        <div>
+                            <span class="text-lg font-bold text-blue-700 block">이민호 본부장</span>
+                            <span class="text-sm text-gray-500">연구개발본부</span>
+                        </div>
+                    </div>
+                    <blockquote class="mt-6 text-lg text-gray-700 border-l-4 border-blue-300 pl-4 italic">
+                        “초박막 멤브레인 기술은 올해 수소 연료전지 효율을 <span class="card-value" data-count="20">0</span>% 이상 개선하며
+                        새로운 경쟁력을 확보했습니다. 수많은 시행착오 끝에 얻은 귀중한 결과입니다.”
+                    </blockquote>
+                    <div class="mt-4 flex flex-wrap gap-3 text-sm text-blue-600 font-medium">
+                        <span class="pill bg-blue-100">#수소멤브레인</span>
+                        <span class="pill bg-blue-100">#효율<span class="card-value" data-count="20">0</span>%개선</span>
+                        <span class="pill bg-blue-100">#국제특허6건</span>
+                    </div>
+                </div>
+
+                <p class="text-gray-600" data-aos="fade-up" data-aos-delay="300">
+                    <strong>Q.</strong> 앞으로의 기술 로드맵은?<br>
+                    <strong>A.</strong> 혈액투석용 멤브레인 상용화에 주력하고 있습니다.
+                    의료 분야 진출을 통해 기술의 사회적 가치까지 확장할 계획입니다.
+                </p>
+            </div>
+        </section>
+
+        <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
+
+        <section id="validation" class="section">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
+                    2. 인공신장 사업본부 영업팀?-> 혈액여과기 수출 MOU 모로코 PRIMEDIC사와 3년간 총 218만 달러 규모의 수출 MOU 체결 , 비브라운 코리아 공급계약
+                </h2>
+                <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
+
+                <div class="card p-6 md:p-10 mb-12 shadow-lg bg-green-50/40" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                        <img src="https://via.placeholder.com/150x150?text=Global+Manager" alt="글로벌 인터뷰"
+                            class="rounded-full w-24 h-24 border-4 border-green-100">
+                        <div>
+                            <span class="text-lg font-bold text-green-700 block">김지영 매니저</span>
+                            <span class="text-sm text-gray-500">글로벌 마케팅팀</span>
+                        </div>
+                    </div>
+                    <blockquote class="mt-6 text-lg text-gray-700 border-l-4 border-green-300 pl-4 italic">
+                        “유럽과 중동 시장에서 총 <span class="card-value" data-count="300">0</span>억 원 규모의 신규 수주를 달성했습니다.
+                        현지화 전략과 품질 경쟁력이 결합된 결과입니다.”
+                    </blockquote>
+                    <div class="mt-4 flex flex-wrap gap-3 text-sm text-green-700 font-medium">
+                        <span class="pill bg-green-100">#유럽수처리수주</span>
+                        <span class="pill bg-green-100">#중동시장<span class="card-value" data-count="300">0</span>억</span>
+                        <span class="pill bg-green-100">#현지화전략</span>
+                    </div>
+                </div>
+
+                <p class="text-gray-600" data-aos="fade-up" data-aos-delay="300">
+                    <strong>Q.</strong> 글로벌 시장 공략의 핵심은?<br>
+                    <strong>A.</strong> 단순 판매가 아니라, 현지 파트너와의 기술 협업을 통한
+                    <strong>‘솔루션 중심 접근’</strong>이 성과의 핵심이었습니다.
+                </p>
+            </div>
+        </section>
+
+        <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
+
+        <section id="business" class="section">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
+                    3.삼성전자 상생협력데이 우수상->> 베트남 사업장팀?
+                </h2>
+                <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
+
+                <div class="card p-6 md:p-10 mb-12 shadow-lg bg-red-50/40" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                        <img src="https://via.placeholder.com/150x150?text=Production+Leader" alt="생산 인터뷰"
+                            class="rounded-full w-24 h-24 border-4 border-red-100">
+                        <div>
+                            <span class="text-lg font-bold text-red-700 block">박현우 팀장</span>
+                            <span class="text-sm text-gray-500">생산 품질관리팀</span>
+                        </div>
+                    </div>
+                    <blockquote class="mt-6 text-lg text-gray-700 border-l-4 border-red-300 pl-4 italic">
+                        “스마트 팩토리 레벨 4 인증으로 생산 효율을 <span class="card-value" data-count="15">0</span>% 향상시켰습니다.
+                        AI 기반 자동검사 시스템으로 불량률은 역대 최저 수준을 달성했습니다.”
+                    </blockquote>
+                    <div class="mt-4 flex flex-wrap gap-3 text-sm text-red-700 font-medium">
+                        <span class="pill bg-red-100">#스마트팩토리4</span>
+                        <span class="pill bg-red-100">#AI검사시스템</span>
+                        <span class="pill bg-red-100">#생산성<span class="card-value" data-count="15">0</span>%상승</span>
+                    </div>
+                </div>
+
+                <p class="text-gray-600" data-aos="fade-up" data-aos-delay="300">
+                    <strong>Q.</strong> 가장 어려운 부분은?<br>
+                    <strong>A.</strong> 공정 변수 관리입니다. 디지털 트윈 기반 시뮬레이션으로
+                    사전 리스크를 줄이고, 직원 교육을 강화해 대응력을 높였습니다.
+                </p>
+            </div>
+        </section>
+
+        <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
+
+        <section id="awards" class="section pb-24">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
+                    4. 경영 관리 & CEO 메시지
+                </h2>
+                <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card p-6 md:p-10 shadow-lg bg-yellow-50/40" data-aos="fade-right" data-aos-delay="200">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                            <img src="https://via.placeholder.com/150x150?text=HR+Lead" alt="HR 인터뷰"
+                                class="rounded-full w-20 h-20 border-4 border-yellow-100">
+                            <div>
+                                <span class="text-lg font-bold text-yellow-700 block">최미정 이사</span>
+                                <span class="text-sm text-gray-500">경영 관리팀</span>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-gray-600">
+                            “2025년에는 유연 근무제 전면 도입과 직무 교육 투자를 <span class="card-value" data-count="40">0</span>% 확대했습니다.
+                            지속 가능한 성과는 건강한 조직문화에서 시작된다고 믿습니다.”
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-3 text-sm text-yellow-700 font-medium">
+                            <span class="pill bg-yellow-100">#유연근무제</span>
+                            <span class="pill bg-yellow-100">#직무교육확대</span>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 md:p-10 shadow-lg bg-indigo-50/40" data-aos="fade-left" data-aos-delay="200">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                            <img src="https://via.placeholder.com/150x150?text=CEO" alt="CEO 인터뷰"
+                                class="rounded-full w-20 h-20 border-4 border-indigo-100">
+                            <div>
+                                <span class="text-lg font-bold text-indigo-700 block">홍길동 대표이사</span>
+                                <span class="text-sm text-gray-500">CEO</span>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-gray-600">
+                            “2026년은 글로벌 Top 3 멤브레인 솔루션 기업으로 도약하는 해로 만들겠습니다.
+                            기술 혁신과 ESG 경영을 양축으로 지속 가능한 성장을 이어가겠습니다.”
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-3 text-sm text-indigo-700 font-medium">
+                            <span class="pill bg-indigo-100">#글로벌Top3</span>
+                            <span class="pill bg-indigo-100">#ESG경영</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <button id="scrollTopBtn" title="맨 위로">▲</button>
+</body>
+</html>
