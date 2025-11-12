@@ -186,9 +186,12 @@
       background: white;
       padding: 2rem;
       box-sizing: border-box;
+    } 
+
+/* 🚀 문제 해결을 위해 추가하는 CSS */
+    section[id] {
+        scroll-margin-top: 100px; /* 고정된 네비게이션 높이에 맞춰 조정 */
     }
-
-
 
   </style>
   
@@ -201,7 +204,7 @@
         let current = '';
         
         sections.forEach(section => {
-          const sectionTop = section.offsetTop - 150;
+          const sectionTop = section.offsetTop - 100;
           const sectionHeight = section.offsetHeight;
           if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
             current = section.getAttribute('id');
@@ -222,6 +225,8 @@
       // 초기 로드 시 실행
       setActiveNav();
     });
+
+  
   </script>
 </head>
 <body class="antialiased">
