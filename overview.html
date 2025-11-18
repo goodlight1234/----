@@ -135,7 +135,7 @@
     }
 
   /* 작은 텍스트 색상 (.small-muted) */
-  .small-muted{ color: #4b5563; font-size: .95rem }
+  .small-muted{ color: #4b5563; font-size: 1.3rem }
 
     /* 카드 내 주요 숫자 값 스타일 (.card-value) 및 반응형 폰트 크기 */
     .card-value{ font-weight:700; color: var(--sinofex-deep); font-size: 1.2rem }
@@ -235,7 +235,7 @@
 }
 
 .activity-name {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
   margin-bottom: 6px;
@@ -270,13 +270,13 @@
       box-shadow: 0 6px 16px rgba(7,59,138,0.04);
       transition: all 0.25s ease;
       color: #374151; /* dark gray for body text */
-      font-size: 1rem;
+      font-size: 1.1rem;
       line-height: 1.5;
     }
     .network-item:hover { box-shadow: 0 12px 28px rgba(7,59,138,0.06); transform: translateY(-4px); }
 
     /* Make the partner/title label more prominent and in brand color */
-    .network-title { display: block; font-weight: 700; color: var(--sinofex-deep); margin-bottom: 8px; font-size: 1.02rem; }
+    .network-title { display: block; font-weight: 700; color: var(--sinofex-deep); margin-bottom: 8px; font-size: 1.rem; }
 
     /* Validation section header color (신규 계약·MOU) */
     #validation h2 { color: var(--sinofex-deep); }
@@ -319,7 +319,7 @@ margin-bottom: 8px;
  .desc {
  margin: 6px 0 0 0;
  color: #222;
- font-size: 1rem;
+ font-size: 1.1rem;
  line-height: 1.5;
  }
  #scrollTopBtn {
@@ -351,21 +351,27 @@ margin-bottom: 8px;
   <div id="menuOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 z-40"></div>
 
   <div id="mobileMenu"
-  class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/70 backdrop-blur-lg shadow-xl z-50 transform translate-x-full transition-transform duration-500 ease-in-out">
-  <div class="p-6 space-y-6 text-lg font-medium text-slate-800">
-    <a href="#hero" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
-    <a href="https://goodlight1234.github.io/synopex2025/tech.html" class="block hover:text-blue-600">2)기술에서 성과로</a>
-    <a href="https://goodlight1234.github.io/synopex2025/interview.html" class="block hover:text-blue-600">3) 시노펙스 인사이드</a>
+  class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/60 backdrop-blur-xl shadow-2xl z-50 transform translate-x-full transition-transform duration-400 ease-in-out">
+
+  <!-- 상단 닫기(X) - 왼쪽으로 이동, '메뉴' 텍스트 제거 -->
+  <div class="flex items-center px-6 py-5 border-b border-slate-200">
+    <button id="closeMenu" class="text-slate-500 hover:text-slate-700 text-3xl leading-none">
+      &times;
+    </button>
+  </div>
+
+  <!-- 메뉴 리스트 -->
+  <div class="p-6 space-y-5 text-lg font-medium text-slate-800">
+    <a href="https://goodlight1234.github.io/synopex2025/overview.html" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
+    <a href="" class="block hover:text-blue-600">2) 기술 & 마케팅 활동</a>
+    <a href="#validation" class="block hover:text-blue-600">3) 임직원 인터뷰</a>
     <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
     <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
     <a href="https://goodlight1234.github.io/report/" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
-
-    <button id="closeMenu"
-      class="mt-8 w-full px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
-      닫기
-    </button>
   </div>
 </div>
+
+
 
   <header class="fixed w-full z-40 top-4 left-0 px-4">
   <nav class="max-w-6xl mx-auto flex items-center justify-between p-3 md:p-4 rounded-xl nav-blur card">
@@ -384,11 +390,11 @@ margin-bottom: 8px;
     </div>
 
     <!-- 메뉴 -->
-    <div class="hidden md:flex items-center gap-5 whitespace-nowrap">
-  <a href="#tech" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">전시 & 학술대회</a>
-  <a href="#validation" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">신규 계약·MOU</a>
-  <a href="#business" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">인증·특허 출원</a>
-  <a href="#awards" class="nav-item text-sm font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">성과 & 수상</a>
+    <div class="hidden md:flex items-center gap-4 whitespace-nowrap">
+  <a href="#tech" class="nav-item text-base' font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">전시·학술대회</a>
+  <a href="#validation" class="nav-item text-base font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">신규계약·MOU</a>
+  <a href="#business" class="nav-item text-base font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">인증·특허 출원</a>
+  <a href="#awards" class="nav-item text-base font-medium text-slate-700 hover:text-[var(--brand)] px-2 py-1">성과·수상</a>
 </div>
 
     <!-- 메뉴 버튼 -->
@@ -414,15 +420,15 @@ margin-bottom: 8px;
           
           <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div class="card p-4">
-              <div class="text-sm small-muted">매출액</div>
+              <div class="text-lg small-muted">매출액</div>
               <div class="card-value mt-2" data-count="1">67,652억 원</div> <div class="yoy up">+18.5%</div>
             </div>
             <div class="card p-4">
-              <div class="text-sm small-muted">영업이익</div>
+              <div class="text-lg small-muted">영업이익</div>
               <div class="card-value mt-2" data-count="12">7,940억 원</div>  <div class="yoy up">+18.5%</div>
             </div>
             <div class="card p-4">
-              <div class="text-sm small-muted">당기순이익</div>
+              <div class="text-lg small-muted">당기순이익</div>
               <div class="card-value mt-2" data-count="8">5,420억 원</div>  <div class="yoy down">+18.5%</div>
             </div>
            </div>
@@ -450,8 +456,8 @@ margin-bottom: 8px;
           </div>
           <div class="chart-wrap mt-4">
       <canvas id="lineChart"class="h-full w-full"></canvas>
-      <span class="small-muted">매출액에 대한 설명을 넣는다</span>
-</div>
+          </div>
+      <p class="small-muted text-lg mt-1">매출액에 대한 설명을 넣는다</p>
           
         </aside>
       </div>
@@ -468,7 +474,7 @@ margin-bottom: 8px;
           <div class="flex items-start gap-3">
             <div>
               <h3 class="font-semibold">Semicon Korea </h3>
-              <p class="small-muted text-sm mt-1">첨단 공정 필터 전시로 반도체 공정의 국산화 성공 부각</p>
+              <p class="small-muted text-lg mt-1">첨단 공정 필터 전시로 반도체 공정의 국산화 성공 부각</p>
             </div>
           </div>
         </article>
@@ -476,7 +482,7 @@ margin-bottom: 8px;
           <div class="flex items-start gap-3">
             <div>
               <h3 class="font-semibold">KSN 2025/병원투석간호사회</h3>
-              <p class="small-muted text-sm mt-1">혈액투석기 상용화 모델 공개</p>
+              <p class="small-muted text-lg mt-1">혈액투석기 상용화 모델 공개</p>
             </div>
           </div>
         </article>
@@ -484,7 +490,7 @@ margin-bottom: 8px;
           <div class="flex items-start gap-3">
             <div>
               <h3 class="font-semibold">Entech / Envex / 국제 물산업 박람회</h3>
-              <p class="small-muted text-sm mt-1">산업용 정수 시스템 전시</p>
+              <p class="small-muted text-lg mt-1">산업용 정수 시스템 전시</p>
             </div>
           </div>
         </article>
@@ -492,7 +498,7 @@ margin-bottom: 8px;
           <div class="flex items-start gap-3">
             <div>
               <h3 class="font-semibold">日 JSHHD 학회 </h3>
-              <p class="small-muted text-sm mt-1">국산 혈액투석 기술력 입증</p>
+              <p class="small-muted text-lg mt-1">국산 혈액투석 기술력 입증</p>
             </div>
           </div>
         </article>
@@ -532,7 +538,7 @@ margin-bottom: 8px;
         <h3 class="font-semibold text-lg">혈액여과기</h3>
         <div class="mt-2 flex items-center gap-2">
           <span class="pill">인증</span>
-          <span class="small-muted text-sm">CE MDR 신청 완료</span>
+          <span class="small-muted text-base">CE MDR 신청 완료</span>
         </div>
         <p class="desc mt-3">BSI 접수 완료 — 11개 제품 대상. IRB 임상 및 SCI급 논문으로 성능·안전성 검증.</p>
       </div>
@@ -543,7 +549,7 @@ margin-bottom: 8px;
         <h3 class="font-semibold text-lg">이동형 정수기</h3>
         <div class="mt-2 flex items-center gap-2">
           <span class="pill">허가</span>
-          <span class="small-muted text-sm">식약처 신청</span>
+          <span class="small-muted text-base">식약처 신청</span>
         </div>
         <p class="desc mt-3">KMDF 국책과제 기반, 소형화된 이동형 정수기로 재택 및 병원용 정재수 공급을 목표.</p>
       </div>
@@ -554,7 +560,7 @@ margin-bottom: 8px;
         <h3 class="font-semibold text-lg">혈액여과기 임상</h3>
         <div class="mt-2 flex items-center gap-2">
           <span class="pill">임상·논문</span>
-          <span class="small-muted text-sm">SCI 등재</span>
+          <span class="small-muted text-base">SCI 등재</span>
         </div>
         <p class="desc mt-3">50명 대상 다기관 임상 완료 — 글로벌 제품 대비 우수한 중분자 제거 성능과 안전성 확보.</p>
       </div>
@@ -568,7 +574,7 @@ margin-bottom: 8px;
         <h3 class="font-semibold text-lg">랩온어칩</h3>
         <div class="mt-2 flex items-center gap-2">
           <span class="pill">특허</span>
-          <span class="small-muted text-sm">출원 진행</span>
+          <span class="small-muted text-base">출원 진행</span>
         </div>
         <p class="desc mt-3">마이크로유체 기반 혈구분석 카트리지 — 소량 혈액으로 다중 분석, PoC 진단 시장 진입 목표.</p>
       </div>
@@ -579,7 +585,7 @@ margin-bottom: 8px;
         <h3 class="font-semibold text-lg">임상시험</h3>
         <div class="mt-2 flex items-center gap-2">
           <span class="pill">다기관 임상</span>
-          <span class="small-muted text-sm">완료</span>
+          <span class="small-muted text-base">완료</span>
         </div>
         <p class="desc mt-3">국내 5개 상급병원에서 50명 대상 임상 완료 — 상용화 및 인증 진행의 핵심 증거 자료 제공.</p>
       </div>
@@ -590,7 +596,7 @@ margin-bottom: 8px;
         <h3 class="font-semibold text-lg">ePTFE 개발 성공</h3>
         <div class="mt-2 flex items-center gap-2">
           <span class="pill">국산화</span>
-          <span class="small-muted text-sm">양산 준비</span>
+          <span class="small-muted text-base">양산 준비</span>
         </div>
         <p class="desc mt-3">반도체·바이오용 초정밀 멤브레인 국산화 — Full In-House 생산체계 구축 및 2026년 양산 목표.</p>
       </div>
@@ -613,7 +619,7 @@ margin-bottom: 8px;
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="card p-5" data-aos="slide-right">
           <h4 class="font-semibold">Awards</h4>
-          <ul class="mt-3 space-y-2 small-muted text-sm">
+          <ul class="mt-3 space-y-2 small-muted text-lg">
             <li> 시노텍스 중소기업중앙회장 표창 수상</li>
             <li>삼성전자 상생협력 우수상</li>
             <li>탄소중립 국책과제 선정</li>
@@ -621,7 +627,7 @@ margin-bottom: 8px;
         </div>
         <div class="card p-5" data-aos="slide-up">
           <h4 class="font-semibold">Timeline</h4>
-          <ol class="mt-3 space-y-3 small-muted text-sm">
+          <ol class="mt-3 space-y-3 small-muted text-lg">
             <li><strong>2025-01</strong> 시노텍스 중소기업중앙회장 표창 수상</li>
             <li><strong>2025-04</strong> 탄소중립 국책과제 선정</li>
             <li><strong>2025-05</strong> 삼성전자 상생협력 우수상</li>
@@ -629,7 +635,7 @@ margin-bottom: 8px;
         </div>
         <div class="card p-5" data-aos="slide-left">
           <h4 class="font-semibold">Partner Network</h4>
-          <p class="small-muted mt-2">주요 파트너: 삼성전자,비브라운코리아, 힐넥서스 등</p>
+          <ul class="mt-3 space-y-2 small-muted text-lg">주요 파트너: 삼성전자,비브라운코리아, 힐넥서스 등</ul>
           <div class="mt-4 flex flex-wrap gap-2">
             <span class="pill">Samsung</span>
             <span class="pill">B. Braun</span>

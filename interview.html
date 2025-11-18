@@ -591,21 +591,26 @@
     <div id="menuOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 z-40"></div>
 
     <div id="mobileMenu"
-        class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/70 backdrop-blur-lg shadow-xl z-50 transform translate-x-full transition-transform duration-500 ease-in-out">
-        <div class="p-6 space-y-6 text-lg font-medium text-slate-800">
-            <a href="https://goodlight1234.github.io/synopex2025/overview.html" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
-            <a href="https://goodlight1234.github.io/synopex2025/tech.html" class="block hover:text-blue-600">2) 기술에서 성과로</a>
-            <a href="#validation" class="block hover:text-blue-600">3) 시노펙스 인사이드</a>
-            <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
-            <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
-            <a href="#news" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
+  class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/60 backdrop-blur-xl shadow-2xl z-50 transform translate-x-full transition-transform duration-400 ease-in-out">
 
-            <button id="closeMenu"
-                class="mt-8 w-full px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
-                닫기
-            </button>
-        </div>
-    </div>
+  <!-- 상단 닫기(X) - 왼쪽으로 이동, '메뉴' 텍스트 제거 -->
+  <div class="flex items-center px-6 py-5 border-b border-slate-200">
+    <button id="closeMenu" class="text-slate-500 hover:text-slate-700 text-3xl leading-none">
+      &times;
+    </button>
+  </div>
+
+  <!-- 메뉴 리스트 -->
+  <div class="p-6 space-y-5 text-lg font-medium text-slate-800">
+    <a href="https://goodlight1234.github.io/synopex2025/overview.html" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
+    <a href="" class="block hover:text-blue-600">2) 기술 & 마케팅 활동</a>
+    <a href="#validation" class="block hover:text-blue-600">3) 임직원 인터뷰</a>
+    <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
+    <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
+    <a href="https://goodlight1234.github.io/report/" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
+  </div>
+</div>
+
 
     <header class="fixed w-full z-40 top-4 left-0 px-4">
         <nav class="max-w-6xl mx-auto flex items-center justify-between p-3 md:p-4 rounded-xl nav-blur card">
