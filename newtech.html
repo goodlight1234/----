@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <!-- 모바일 반응형 뷰포트 (고정 width 제거) -->
+ <meta name="viewport" content="width=900">
+  <title>2025 SYNOPEX NEWSLETTER</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Noto Sans KR -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <meta name="color-scheme" content="light dark">
+
+  <style>
+    :root{
+      --brand: #0971C2;
+      --muted: #f7fbff;
+      --sinofex-blue: #0f62fe;
+      --sinofex-deep: #073b8a;
+    }
+
+      html,body{
+       font-family: 'Noto Sans KR', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, "Helvetica Neue";
+      -webkit-font-smoothing:antialiased;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background-color: #ffffff;
+      color: #1f2937; /* text-gray-800 */
+      font-size: 18px;
+      line-height: 1.6;
+      /* 🔥🔥 핵심 수정: body에 overflow-x-hidden 적용하여 모든 가로 스크롤을 방지합니다. */
+      overflow-x: hidden; 
+    }
+    /* subtle background sections */
+    .section-muted { background: linear-gradient(180deg, rgba(9,113,194,0.03), transparent); }
+
+    /* card subtle border */
+    .card-border { border: 1px solid rgba(9,113,194,0.06); }
+
+    /* small utility for gradient divider line */
+    .grad-line { background: linear-gradient(90deg, rgba(9,113,194,1), rgba(56,189,248,1)); height: 6px; border-radius: 9999px; }
+
+    /* timeline dot fallback */
+    .timeline-dot { width: .875rem; height: .875rem; background: var(--brand); border-radius: 9999px; }
+
+       /* Glass Navigation */
+     /* Simple nav */
+    .nav-blur{ background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5)); backdrop-filter: blur(6px); }
+
+    /* Utility highlight */
+    .pill{ background: linear-gradient(90deg, rgba(15,98,254,0.08), rgba(7,59,138,0.03)); color: var(--sinofex-deep); padding:.35rem .6rem; border-radius:999px; font-weight:600 }
+
+    /* tiny icon sizes */
+    .icon-sm{ width:20px; height:20px }
+ .menu-enter { transform: translateY(-10px); opacity: 0; }
+    .menu-enter-active { transform: translateY(0); opacity: 1; transition: all 0.3s ease-in-out; }
+ .card {
+ background: #fff;
+ border-radius: 10px;
+ padding: 14px;
+ box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+ border: 1px solid rgba(0,0,0,0.04);
+ }
+ 
+
+    /* reduced motion support */
+    @media (prefers-reduced-motion: reduce){
+      * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+    }
+
+    /* small responsive tweaks for images inside list cards */
+    .card-image-cover { min-height: 120px; object-fit: cover; width: 100%; border-radius: .5rem; }
+    
+    .nav-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-item:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--brand);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .nav-item.active {
+      color: var(--brand);
+      font-weight: 600;
+      transform: scale(1.1);
+    }
+    
+    .nav-item.active:after {
+      transform: scaleX(1);
+    }
+      .card-border {
+    border: 1px solid rgba(9,113,194,0.06);
+    transition: all 0.3s ease;
+  }
+
+  .card-border:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  .card-image-cover {
+    width: 100%;
+    height: 10rem; /* h-40 */
+    object-fit: cover;
+    border-radius: .5rem;
+  }
+
+  .card-img-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: .5rem;
+  }
+
+  /* subtle overlay for readability */
+  .card-img-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0));
+  }
+
+   .tech-card {
+      display: flex;
+      flex-direction: row; /* 항상 가로 배치 */
+      align-items: stretch;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tech-card img {
+      width: 45%;
+      height: auto;
+      border-radius: .5rem;
+      object-fit: cover;
+    }
+
+    #tech .card-img-wrap {
+      flex: 1;
+      min-height: 240px;
+      overflow: hidden;
+      border-radius: .5rem;
+    }
+
+    #tech .card-image-cover {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: .5rem;
+      display: block;
+    }
+
+    .card-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+      .page-wrap {
+      width: 900px; /* 항상 900px 고정 */
+      background: white;
+      padding: 2rem;
+      box-sizing: border-box;
+    } 
+
+/* 🚀 문제 해결을 위해 추가하는 CSS */
+    section[id] {
+        scroll-margin-top: 100px; /* 고정된 네비게이션 높이에 맞춰 조정 */
+    }
+
+  </style>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('section[id]');
+      const navItems = document.querySelectorAll('.nav-item');
+      
+      function setActiveNav() {
+        let current = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 100;
+          const sectionHeight = section.offsetHeight;
+          if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('href').slice(1) === current) {
+            item.classList.add('active');
+          }
+        });
+      }
+      
+      // 스크롤 시 실행
+      window.addEventListener('scroll', setActiveNav);
+      
+      // 초기 로드 시 실행
+      setActiveNav();
+    });
+
+  
+  </script>
+</head>
+<body class="antialiased">
+
+  <!-- =========================
+       Header (Navigation)
+       ========================= -->
+ <body class="antialiased">
+ <div id="menuOverlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500 z-40"></div>
+
+<div id="mobileMenu"
+  class="fixed top-0 right-0 w-3/4 max-w-sm h-full bg-white/60 backdrop-blur-xl shadow-2xl z-50 transform translate-x-full transition-transform duration-400 ease-in-out">
+
+  <!-- 상단 닫기(X) - 왼쪽으로 이동, '메뉴' 텍스트 제거 -->
+  <div class="flex items-center px-6 py-5 border-b border-slate-200">
+    <button id="closeMenu" class="text-slate-500 hover:text-slate-700 text-3xl leading-none">
+      &times;
+    </button>
+  </div>
+
+  <!-- 메뉴 리스트 -->
+  <div class="p-6 space-y-5 text-lg font-medium text-slate-800">
+    <a href="https://goodlight1234.github.io/synopex2025/overview.html" class="block hover:text-blue-600">1) 시노펙스 2025 한눈에 보기</a>
+    <a href="" class="block hover:text-blue-600">2) 기술 & 마케팅 활동</a>
+    <a href="https://goodlight1234.github.io/synopex2025/interview.html" class="block hover:text-blue-600">3) 임직원 인터뷰</a>
+    <a href="#business" class="block hover:text-blue-600">4) 인사이트펙스</a>
+    <a href="#awards" class="block hover:text-blue-600">5) 2026 계획</a>
+    <a href="https://goodlight1234.github.io/report/" class="block hover:text-blue-600">6) 뉴스 아카이브</a>
+  </div>
+</div>
+
+
+ <header class="fixed w-full z-40 top-4 left-0 px-4">
+  <nav class="max-w-6xl mx-auto flex items-center justify-between p-2 sm:p-3 rounded-xl nav-blur card">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3">
+        <!-- 로고 -->
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+          <img src="images/synopex_ci_e (2) 2.png" alt="Synopex Logo">
+        </div>
+
+        <!-- ✅ PC / 태블릿용 (900px 초과) -->
+        <div class="hidden max-[900px]:hidden min-[901px]:block">
+          <div class="text-base md:text-lg font-bold leading-tight">
+            2025 SYNOPEX NEWSLETTER
+          </div>
+          <div class="text-xs md:text-sm small-muted">
+            시노펙스 2025 한해를 한눈에
+          </div>
+        </div>
+
+        <!-- ✅ 모바일용 (900px 이하에서만 표시) -->
+        <div class="hidden max-[900px]:flex flex-col text-left leading-tight">
+          <div class="text-lg font-bold">2025 SYNOPEX</div>
+          <div class="text-lg font-bold">NEWSLETTER</div>
+          <div class="text-xs text-gray-600">시노펙스 2025 한해를 한눈에</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 네비게이션 -->
+    <div class="hidden md:flex items-center gap-7 lg:gap-8">
+      <a href="#tech" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">기술성과</a>
+      <a href="#field" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">전시·학술대회</a>
+    </div>
+
+    <!-- 메뉴 버튼 -->
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <button class="p-2 rounded-md" aria-label="menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+  <!-- =========================
+       Main content
+       ========================= -->
+  <main id="main" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 py-10">
+
+  
+  
+    <!-- =========================
+         1. 기술성과 (Grid)
+         ========================= -->
+   <section id="tech" class="mb-12" aria-label="기술성과">
+  <div class="flex items-start justify-between mb-6">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-4" data-aos="fade-right">기술성과</h2>
+      <p class="text-gray-600">2025년, 시노펙스는 단순한 필터 제조사를 넘어 바이오·필터 분야에서 자립형 핵심소재·기술을 확보했습니다.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- CE MDR 인증 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images\Frame 5523.jpg" alt="CE MDR 인증" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 CE MDR 인증 신청 완료</h4>
+          <p class="text-sm text-gray-600 mt-2">국내 기업 최초로 BSI에 CE MDR 접수 진행</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>11개 제품 대상 인증 신청</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>3개 병원 IRB 임상 성공</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>SCI 논문으로 성능·안전성 입증</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">유럽 진출</span>
+          <span class="pill text-xs">국내 최초</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 식약처 허가 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="80">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images\Frame 5524.jpg" alt="이동형 정수기 식약처 허가" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">이동형 정수기 식약처 허가 신청</h4>
+          <p class="text-sm text-gray-600 mt-2">KMDF 국책과제 선정작</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>초소형 크기 (250×475×675mm)</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>재택 혈액투석 지원</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>자체 전처리 필터 내장</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">이동성</span>
+          <span class="pill text-xs">재택의료</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 혈액여과기 임상 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="160">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images\혈액여과기.jpg" alt="혈액여과기 임상" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 임상 성공 · SCI 논문 게재</h4>
+          <p class="text-sm text-gray-600 mt-2">Kidney Research and Clinical Practice 등재</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>50명 대상 다기관 임상 완료</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>글로벌 제품 대비 우수한 성능</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>국내 40개 병원 공급 중</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">임상 검증</span>
+          <span class="pill text-xs">SCI 등재</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 랩온어칩 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="240">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images\Frame 5522.jpg" alt="랩온어칩 특허 출원" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">랩온어칩 혈구분석 카트리지 특허 출원</h4>
+          <p class="text-sm text-gray-600 mt-2">마이크로유체 기반 혈액 한 방울로 다중 혈구 분석 — PoC 진단 시장 진입 발판.</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>정밀 미세채널 설계 기반 데이터 일관성 확보</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>소량 혈액(한 방울)으로 다중 분석 가능</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>PoC 및 이동형 진단기 통합 가능성</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">특허 출원</span>
+          <span class="pill text-xs">진단 혁신</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ePTFE 개발 카드 -->
+    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="320">
+      <div class="card-img-wrap lg:w-2/5">
+        <img src="images\EPTFE.jpg" alt="ePTFE 개발 성공" class="card-image-cover">
+      </div>
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h4 class="text-lg font-semibold text-[var(--brand)]">ePTFE 개발 성공</h4>
+          <p class="text-sm text-gray-600 mt-2">30년간 해외 독점 기술을 극복하고 국산화에 성공</p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>반도체용 10나노급 필터 구현</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>Full In-House 생산체계 구축</li>
+            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>2026년 양산 목표</li>
+          </ul>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <span class="pill text-xs">기술 자립</span>
+          <span class="pill text-xs">소재 혁신</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+    <!-- =========================
+         2. 현장 검증 (Events list)
+         ========================= -->
+    <section id="field" class="mb-12" aria-label="현장 검증">
+      <div class="flex items-start justify-between mb-6">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold" data-aos="fade-right">전시·학술대회</h2>
+          <p class="text-gray-600 mt-2 max-w-2xl">전시회와 학회를 통해 국내외 전문가에게 기술력이 검증된 사례들을 모았습니다.</p>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <!-- event 1 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row gap-6 items-center" data-aos="fade-up">
+          <img src="images\semicon 1.png" alt="SEMICON Korea 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">SEMICON Korea 2025 (2.19~21, 코엑스)</h3>
+            <div class="mt-3">
+              <p class="text-sm text-gray-600">- 국내 최초 10나노 반도체용 케미컬 필터 개발 공개</p>
+              <p class="text-sm text-gray-600">- 15나노 및 10나노 반도체용 케미컬 필터 2종</p>
+              <p class="text-sm text-gray-600">- 70나노 및 50나노 CMP필터 2종</p>
+              <p class="text-sm text-gray-600">- Post-CMP필터 1종 첫 선</p>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="pill text-xs">국산화</span>
+              <span class="pill text-xs">초정밀공정</span>
+              <span class="pill text-xs">공급망 대응</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- event 2 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row-reverse gap-6 items-center" data-aos="fade-up" data-aos-delay="80">
+          <img src="images\Entech_2025_new.jpg" alt="ENTECH 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">ENTECH/ENVEX 2025 (6.11~13 & 8.27~29)</h3>
+            <div class="mt-3">
+              <p class="text-sm text-gray-600">- 6개국 180개 기업 참여, 대표 국제 환경에너지 전시회</p>
+              <p class="text-sm text-gray-600">- 가압식 PVDF 멤브레인 필터, 침지식 MBR 필터 2종</p>
+              <p class="text-sm text-gray-600">- CMP필터, 케미컬필터, POU필터, PES필터 등 전시</p>
+              <p class="text-sm text-gray-600">- 기체분리막(H2, O2, CO2) 신기술 공개</p>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="pill text-xs">수처리 통합</span>
+              <span class="pill text-xs">탄소중립</span>
+              <span class="pill text-xs">친환경기술</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- event 3 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row gap-6 items-center" data-aos="fade-up" data-aos-delay="140">
+          <img src="images\unnamed.png" alt="KSN 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">KSN 2025 대한신장학회 (6.19~22, 코엑스)</h3>
+            <div class="mt-3">
+              <p class="text-sm text-gray-600">- AI 기술 적용 플랫폼 '넥스케어' 최초 공개</p>
+              <p class="text-sm text-gray-600">- 원격모니터링 이동형 혈액투석의료기기 개발 현황 발표</p>
+              <p class="text-sm text-gray-600">- CRRT, HD기기, 혈액여과기, 정수기 등 전시</p>
+              <p class="text-sm text-gray-600">- 세계여행투석네트워크(WTDM) 연계 플랫폼 시연</p>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="pill text-xs">AI 플랫폼</span>
+              <span class="pill text-xs">원격모니터링</span>
+              <span class="pill text-xs">환자접근성</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- event 4 -->
+        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row-reverse gap-6 items-center" data-aos="fade-up" data-aos-delay="200">
+          <img src="images\261_ext_04_0.jpg" alt="JSHHD 2025" class="w-full md:w-1/3 card-image-cover">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-[var(--brand)]">JSHHD 2025 일본 국제재택혈액투석학회 (9.6~8)</h3>
+            <div class="mt-3">
+              <p class="text-sm text-gray-600">- 10개국 600여 명의 전문의 참가 국제 학회</p>
+              <p class="text-sm text-gray-600">- Synoflux® 혈액여과기 임상결과 첫 국제 발표</p>
+              <p class="text-sm text-gray-600">- SCI급 논문 게재 이후 첫 해외 발표</p>
+              <p class="text-sm text-gray-600">- 이동형 인공신장기 제품군 해외 첫 공개</p>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="pill text-xs">글로벌 검증</span>
+              <span class="pill text-xs">임상신뢰도</span>
+              <span class="pill text-xs">국제네트워크</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  
+
+    <!-- =========================
+         Call-to-action section
+         ========================= -->
+    <section class="mb-24 p-6 rounded-2xl bg-[linear-gradient(180deg,#f7fbff,transparent)] card-border text-center" data-aos="fade-up">
+      <h3 class="text-2xl font-semibold text-[var(--brand)]">시노펙스는 성과로 증명합니다</h3>
+      <p class="text-sm text-gray-600 mt-3">기술의 탄생, 현장검증, 그리고 시장 확장 — 3단 스토리 플로우로 연결되는 여정에 함께해 주세요.</p>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://goodlight1234.github.io/synopex2025/overview.html" class="px-4 py-2 rounded-md border border-[var(--brand)] text-[var(--brand)]">시노펙스 2025 한눈에 보기</a>
+        <a href="https://goodlight1234.github.io/synopex2025/interview.html" class="px-4 py-2 rounded-md bg-[var(--brand)] text-white">성과 뒤에 숨은 사람들 이야기</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================
+       Footer
+       ========================= -->
+  <footer class="bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-500">© 2025 SYNOPEX. All rights reserved.</div>
+      <div class="text-sm text-gray-400">Design & content: SYNOPEX — For internal newsletter</div>
+    </div>
+  </footer>
+
+  <!-- =========================
+       Scripts: AOS + UI behaviors
+       ========================= -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // AOS init with moderate duration. Using a mixture of fade/zoom/slide via data-aos attributes in HTML.
+    AOS.init({
+      duration: 700,
+      once: true,
+      anchorPlacement: 'top-bottom',
+      easing: 'ease-out-cubic'
+    });
+
+    // Mobile nav toggle
+  /* DOMContentLoaded 이벤트 바깥쪽, 기존 메뉴 JS 코드 블록을 대체합니다. */
+const menuBtn = document.querySelector('button[aria-label="menu"]');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeBtn = document.getElementById('closeMenu');
+const overlay = document.getElementById('menuOverlay');
+
+// 메뉴 닫기 로직을 함수로 정의하여 재사용성을 높입니다.
+const closeMobileMenu = () => {
+    // 1. 모바일 메뉴 닫기
+    mobileMenu.classList.remove('opacity-100'); 
+    mobileMenu.classList.add('translate-x-full', 'opacity-0');
+    
+    // 2. 🔥 오버레이(배경) 비활성화
+    overlay.classList.remove('opacity-100');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+};
+
+
+// 메뉴 열기
+menuBtn.addEventListener('click', () => {
+    // 1. 모바일 메뉴 열기
+    mobileMenu.classList.remove('translate-x-full', 'opacity-0'); 
+    mobileMenu.classList.add('opacity-100');
+    
+    // 2. 🔥 오버레이(배경) 활성화
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.add('opacity-100'); 
+});
+
+// 메뉴 닫기 (닫기 버튼)
+closeBtn.addEventListener('click', closeMobileMenu);
+
+// 오버레이 클릭 시 메뉴 닫기
+overlay.addEventListener('click', closeMobileMenu);
+
+// 메뉴 항목 클릭 시 닫기
+document.querySelectorAll('#mobileMenu a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        closeMobileMenu(); // 메뉴를 닫습니다.
+
+        // 스크롤 로직을 비동기로 처리하여 메뉴 닫힘 애니메이션을 기다립니다.
+        const href = link.getAttribute('href');
+        const target = document.querySelector(href);
+        if(target && href.startsWith('#')) {
+            e.preventDefault(); 
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+            }, 500); // 500ms는 메뉴 닫힘 애니메이션 시간과 일치시킵니다 (CSS duration-500).
+        }
+    });
+});
+
+    // Intersection Observer based count-up animation
+    function animateNumber(el, target, duration = 1200) {
+      const start = 0;
+      const range = target - start;
+      const startTime = performance.now();
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutQuad
+        const eased = 1 - (1 - progress) * (1 - progress);
+        const value = Math.floor(start + (range * eased));
+        el.textContent = value.toLocaleString();
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Observe elements with data-count-target
+    const countEls = document.querySelectorAll('[data-count-target]');
+    if ('IntersectionObserver' in window && countEls.length) {
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.getAttribute('data-count-target') || '0', 10);
+            animateNumber(el, target, 1500);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.4 });
+      countEls.forEach(el => obs.observe(el));
+    } else {
+      // fallback if no IntersectionObserver
+      countEls.forEach(el => {
+        const target = parseInt(el.getAttribute('data-count-target') || '0', 10);
+        animateNumber(el, target, 1500);
+      });
+    }
+
+    // Accessibility: ensure images with placeholder have alt; nothing else required.
+  </script>
+</body>
+</html>
