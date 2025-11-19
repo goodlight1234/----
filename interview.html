@@ -122,40 +122,7 @@
             }
             tryInitCountUps(); // 페이지 로드 시 한 번 실행
 
-            // ----------------------------------------------------
-            // 📈 Chart.js 설정
-            // ----------------------------------------------------
-
-            // 🌟 1. 라인 차트 (lineChart) 설정 (매출액 추이 - 분기 데이터 채택) 🌟
-            const lineCtx = document.getElementById('lineChart');
-            if (lineCtx) {
-                new Chart(lineCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['24.4Q', '25.1Q', '25.2Q', '25.3Q', '25.4Q'],
-                        datasets: [{
-                            label: '매출액 (억 원)',
-                            data: [55400, 58800, 61200, 64500, 67652],
-                            borderColor: '#0f62fe',
-                            fill: true,
-                            tension: 0.4,
-                            backgroundColor: 'rgba(15,98,254,0.1)'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'top' },
-                            tooltip: { callbacks: { label: (ctx) => ctx.dataset.label + ': ' + ctx.formattedValue + '억 원' } }
-                        },
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { beginAtZero: false, grid: { color: 'rgba(10,10,10,0.04)' } }
-                        }
-                    }
-                });
-            }
+          
 
             // 🌟 2. 영역 차트 (Area Chart - validation) 설정 🌟 (HTML에 해당 canvas가 없으므로 작동하지 않음)
             // const areaCanvas = document.getElementById('areaChart'); // 해당 canvas는 HTML에 없어 주석 처리
@@ -727,42 +694,64 @@
 </section>
 
 
-        <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
+      <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
 
-        <section id="validation" class="section">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
-                    2. 인공신장 사업본부 영업팀?-> 혈액여과기 수출 MOU 모로코 PRIMEDIC사와 3년간 총 218만 달러 규모의 수출 MOU 체결 , 비브라운 코리아 공급계약
-                </h2>
-                <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
+<section id="validation" class="section">
+    <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
+            2. 이진태 본부장님 - 혈액투석 사업 성과
+        </h2>
+        <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
 
-                <div class="card p-6 md:p-10 mb-12 shadow-lg bg-green-50/40" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-                        <img src="https://via.placeholder.com/150x150?text=Global+Manager" alt="글로벌 인터뷰"
-                            class="rounded-full w-24 h-24 border-4 border-green-100">
-                        <div>
-                            <span class="text-lg font-bold text-green-700 block">미정</span>
-                            <span class="text-sm text-gray-500">인공신장 사업본부 영업팀</span>
-                        </div>
-                    </div>
-                    <blockquote class="mt-6 text-lg text-gray-700 border-l-4 border-green-300 pl-4 italic">
-                        “유럽과 중동 시장에서 총 <span class="card-value" data-count="300">0</span>억 원 규모의 신규 수주를 달성했습니다.
-                        현지화 전략과 품질 경쟁력이 결합된 결과입니다.”
-                    </blockquote>
-                    <div class="mt-4 flex flex-wrap gap-3 text-sm text-green-700 font-medium">
-                        <span class="pill bg-green-100">#유럽수처리수주</span>
-                        <span class="pill bg-green-100">#중동시장<span class="card-value" data-count="300">0</span>억</span>
-                        <span class="pill bg-green-100">#현지화전략</span>
-                    </div>
+        <!-- 올해 성과 카드 -->
+        <div class="card p-6 md:p-10 mb-12 shadow-lg bg-green-50/40" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <img src="https://via.placeholder.com/150x150?text=Dialysis+Lead" alt="혈액투석 총괄"
+                    class="rounded-full w-24 h-24 border-4 border-green-100">
+                <div>
+                    <span class="text-lg font-bold text-green-700 block">이진태 본부장</span>
+                    <span class="text-sm text-gray-500">인공신장 사업본부</span>
                 </div>
-
-                <p class="text-gray-600" data-aos="fade-up" data-aos-delay="300">
-                    <strong>Q.</strong> 글로벌 시장 공략의 핵심은?<br>
-                    <strong>A.</strong> 단순 판매가 아니라, 현지 파트너와의 기술 협업을 통한
-                    <strong>‘솔루션 중심 접근’</strong>이 성과의 핵심이었습니다.
-                </p>
             </div>
-        </section>
+
+            <blockquote class="mt-6 text-lg text-gray-700 border-l-4 border-green-300 pl-4 italic">
+                “올해는 국산 혈액여과기 기술의 글로벌 검증과 해외 진입 기반을 확보한 해였습니다.
+                CE MDR 공식 제출, 서울대 등 상급병원 임상 완료, 모로코 수출 계약 등 의미 있는 진전이 이어졌습니다.”
+            </blockquote>
+
+            <div class="mt-4 flex flex-wrap gap-3 text-sm text-green-700 font-medium">
+                <span class="pill bg-green-100">#CE_MDR공식제출</span>
+                <span class="pill bg-green-100">#서울대임상_SCI등재</span>
+                <span class="pill bg-green-100">#모로코수출계약</span>
+                <span class="pill bg-green-100">#비브라운공급협력</span>
+            </div>
+        </div>
+
+       <p class="text-gray-600 space-y-6" data-aos="fade-up" data-aos-delay="300">
+
+  <!-- 올해 가장 큰 성과 -->
+  <strong class="block text-xl font-bold text-green-700 mb-2">
+    Q. 올해 인공신장·혈액투석 사업의 가장 큰 성과는?
+  </strong>
+  <strong>A.</strong>
+  올해는 임상·인증·해외사업이 모두 진전된 해였습니다.  
+  서울대 등 주요 병원에서의 임상 결과가 SCI에 등재되며 제품 경쟁력을 공식적으로 인정받았고,  
+  CE MDR 임상도 마무리되어 Technical File을 제출했습니다.  
+  또한 모로코 수출 계약과 비브라운코리아 협력을 통해 해외 공급 기반을 확보하는 성과가 있었습니다.
+
+  <!-- 내년 계획 -->
+  <strong class="block text-xl font-bold text-green-700 mt-10 mb-2">
+    Q. 내년 혈액투석 분야의 주요 계획은?
+  </strong>
+  <strong>A.</strong>
+  내년은 글로벌 확장을 위한 실행 단계에 들어갑니다.  
+  CE MDR 인증을 획득한 뒤 유럽과 중동을 중심으로 등록을 확대하고,  
+  FDA 진입 준비도 병행해 미국 시장 요건에 맞춘 문서·시험 체계를 강화할 예정입니다.  
+  아울러 혈액 회로·투석액 등 신제품 출시와 함께 생산 캐파를 확대하고,  
+  루미오 혈구 분석기는 업그레이드를 마쳐 상반기 상용화를 추진합니다.
+
+</p>
+
 
         <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
 
@@ -801,55 +790,7 @@
             </div>
         </section>
 
-        <hr class="my-10 border-gray-100 max-w-6xl mx-auto">
-
-        <section id="awards" class="section pb-24">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2" data-aos="fade-up">
-                    4. 경영 관리 & CEO 메시지
-                </h2>
-                <div class="sinofex-hr mb-8" data-aos="fade-up" data-aos-delay="100"></div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="card p-6 md:p-10 shadow-lg bg-yellow-50/40" data-aos="fade-right" data-aos-delay="200">
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-                            <img src="https://via.placeholder.com/150x150?text=HR+Lead" alt="HR 인터뷰"
-                                class="rounded-full w-20 h-20 border-4 border-yellow-100">
-                            <div>
-                                <span class="text-lg font-bold text-yellow-700 block">정민재</span>
-                                <span class="text-sm text-gray-500">경영지원본부장</span>
-                            </div>
-                        </div>
-                        <p class="mt-4 text-gray-600">
-                            “2025년에는 유연 근무제 전면 도입과 직무 교육 투자를 <span class="card-value" data-count="40">0</span>% 확대했습니다.
-                            지속 가능한 성과는 건강한 조직문화에서 시작된다고 믿습니다.”
-                        </p>
-                        <div class="mt-4 flex flex-wrap gap-3 text-sm text-yellow-700 font-medium">
-                            <span class="pill bg-yellow-100">#유연근무제</span>
-                            <span class="pill bg-yellow-100">#직무교육확대</span>
-                        </div>
-                    </div>
-
-                    <div class="card p-6 md:p-10 shadow-lg bg-indigo-50/40" data-aos="fade-left" data-aos-delay="200">
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-                            <img src="https://via.placeholder.com/150x150?text=CEO" alt="CEO 인터뷰"
-                                class="rounded-full w-20 h-20 border-4 border-indigo-100">
-                            <div>
-                                <span class="text-lg font-bold text-indigo-700 block">손경익</span>
-                                <span class="text-sm text-gray-500">CEO</span>
-                            </div>
-                        </div>
-                        <p class="mt-4 text-gray-600">
-                            “임직원들이 좋아할만한 이야기들~”
-                        </p>
-                        <div class="mt-4 flex flex-wrap gap-3 text-sm text-indigo-700 font-medium">
-                            <span class="pill bg-indigo-100">#글로벌Top3</span>
-                            <span class="pill bg-indigo-100">#ESG경영</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        =
     <section class="mb-24 p-6 rounded-2xl bg-[linear-gradient(180deg,#f7fbff,transparent)] card-border text-center" data-aos="fade-up">
       <h3 class="text-2xl font-semibold text-[var(--brand)]">외부 전문가들은 시노펙스를 어떻게 평가했을까요?</h3>
       <p class="text-sm text-gray-600 mt-3">내부의 목소리에 이어, 외부 전문가들의 의견도 확인해보세요.</p>
