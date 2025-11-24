@@ -290,7 +290,8 @@
     <!-- 네비게이션 -->
     <div class="hidden md:flex items-center gap-7 lg:gap-8">
       <a href="#tech" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">기술성과</a>
-      <a href="#field" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">전시·학술대회</a>
+      <a href="#field" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">현장검증</a>
+      <a href="#business" class="nav-item text-sm md:text-base font-medium text-slate-700 hover:text-[var(--brand)] px-3 py-2">사업 확장성과</a>
     </div>
 
     <!-- 메뉴 버튼 -->
@@ -308,227 +309,107 @@
        Main content
        ========================= -->
   <main id="main" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 py-10">
+<section class="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
 
-  
-  
-    <!-- =========================
-         1. 기술성과 (Grid)
-         ========================= -->
-   <section id="tech" class="mb-12" aria-label="기술성과">
-  <div class="flex items-start justify-between mb-6">
-    <div>
-      <h2 class="text-2xl md:text-3xl font-bold mb-4" data-aos="fade-right">기술성과</h2>
-      <p class="text-gray-600">2025년, 시노펙스는 단순한 필터 제조사를 넘어 바이오·필터 분야에서 자립형 핵심소재·기술을 확보했습니다.</p>
-    </div>
+  <!-- Background image -->
+  <div class="absolute inset-0">
+    <img
+      src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2400&auto=format&fit=crop"
+      alt="Corporate Background"
+      class="w-full h-full object-cover object-center"
+    />
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- Dark overlay (강화: 가독성 ↑) -->
+  <div class="absolute inset-0 bg-black/90 backdrop-blur-[3px]"></div>
 
-    <!-- CE MDR 인증 카드 -->
-    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up">
-      <div class="card-img-wrap lg:w-2/5">
-        <img src="images\Frame 5523.jpg" alt="CE MDR 인증" class="card-image-cover">
-      </div>
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 CE MDR 인증 신청 완료</h4>
-          <p class="text-sm text-gray-600 mt-2">국내 기업 최초로 BSI에 CE MDR 접수 진행</p>
-          <ul class="mt-3 space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>11개 제품 대상 인증 신청</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>3개 병원 IRB 임상 성공</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>SCI 논문으로 성능·안전성 입증</li>
-          </ul>
-        </div>
-        <div class="mt-4 flex gap-2">
-          <span class="pill text-xs">유럽 진출</span>
-          <span class="pill text-xs">국내 최초</span>
-        </div>
-      </div>
-    </article>
+  <!-- Content -->
+  <div class="relative z-10 w-full max-w-[980px] px-6 py-24">
 
-    <!-- 식약처 허가 카드 -->
-    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="80">
-      <div class="card-img-wrap lg:w-2/5">
-        <img src="images\Frame 5524.jpg" alt="이동형 정수기 식약처 허가" class="card-image-cover">
-      </div>
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-[var(--brand)]">이동형 정수기 식약처 허가 신청</h4>
-          <p class="text-sm text-gray-600 mt-2">KMDF 국책과제 선정작</p>
-          <ul class="mt-3 space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>초소형 크기 (250×475×675mm)</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>재택 혈액투석 지원</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>자체 전처리 필터 내장</li>
-          </ul>
-        </div>
-        <div class="mt-4 flex gap-2">
-          <span class="pill text-xs">이동성</span>
-          <span class="pill text-xs">재택의료</span>
-        </div>
-      </div>
-    </article>
+    <h1 class="text-white text-5xl md:text-6xl font-extrabold leading-tight tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]">
+      2025 CEO 신년사<br />
+      기술로 돌파하고, 실행으로 증명하는 시노펙스
+    </h1>
 
-    <!-- 혈액여과기 임상 카드 -->
-    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="160">
-      <div class="card-img-wrap lg:w-2/5">
-        <img src="images\혈액여과기.jpg" alt="혈액여과기 임상" class="card-image-cover">
-      </div>
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-[var(--brand)]">혈액여과기 임상 성공 · SCI 논문 게재</h4>
-          <p class="text-sm text-gray-600 mt-2">Kidney Research and Clinical Practice 등재</p>
-          <ul class="mt-3 space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>50명 대상 다기관 임상 완료</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>글로벌 제품 대비 우수한 성능</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>국내 40개 병원 공급 중</li>
-          </ul>
-        </div>
-        <div class="mt-4 flex gap-2">
-          <span class="pill text-xs">임상 검증</span>
-          <span class="pill text-xs">SCI 등재</span>
-        </div>
-      </div>
-    </article>
+    <p class="mt-4 text-white text-xl md:text-2xl font-medium drop-shadow-[0_3px_10px_rgba(0,0,0,0.6)]">
+      Synopex 2025 New Year’s Address
+    </p>
 
-    <!-- 랩온어칩 카드 -->
-    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="240">
-      <div class="card-img-wrap lg:w-2/5">
-        <img src="images\Frame 5522.jpg" alt="랩온어칩 특허 출원" class="card-image-cover">
-      </div>
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-[var(--brand)]">랩온어칩 혈구분석 카트리지 특허 출원</h4>
-          <p class="text-sm text-gray-600 mt-2">마이크로유체 기반 혈액 한 방울로 다중 혈구 분석 — PoC 진단 시장 진입 발판.</p>
-          <ul class="mt-3 space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>정밀 미세채널 설계 기반 데이터 일관성 확보</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>소량 혈액(한 방울)으로 다중 분석 가능</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>PoC 및 이동형 진단기 통합 가능성</li>
-          </ul>
-        </div>
-        <div class="mt-4 flex gap-2">
-          <span class="pill text-xs">특허 출원</span>
-          <span class="pill text-xs">진단 혁신</span>
-        </div>
-      </div>
-    </article>
+    <div class="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
 
-    <!-- ePTFE 개발 카드 -->
-    <article class="p-6 rounded-xl bg-white shadow-md card-border tech-card" data-aos="fade-up" data-aos-delay="320">
-      <div class="card-img-wrap lg:w-2/5">
-        <img src="images\EPTFE.jpg" alt="ePTFE 개발 성공" class="card-image-cover">
-      </div>
-      <div class="flex-1 flex flex-col justify-between">
-        <div>
-          <h4 class="text-lg font-semibold text-[var(--brand)]">ePTFE 개발 성공</h4>
-          <p class="text-sm text-gray-600 mt-2">30년간 해외 독점 기술을 극복하고 국산화에 성공</p>
-          <ul class="mt-3 space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>반도체용 10나노급 필터 구현</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>Full In-House 생산체계 구축</li>
-            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400"></span>2026년 양산 목표</li>
-          </ul>
+      <!-- CEO Photo -->
+      <figure class="lg:col-span-1 flex justify-center">
+        <img
+          src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=900&q=80"
+          alt="CEO Portrait"
+          class="w-72 md:w-80 lg:w-80 rounded-2xl shadow-2xl border border-white/10 object-cover 
+                 brightness-[0.92] contrast-[1.05]"
+        />
+      </figure>
+
+      <!-- Text -->
+      <div class="lg:col-span-2 text-white text-[19px] md:text-[20px] leading-[1.85] drop-shadow-[0_3px_6px_rgba(0,0,0,0.75)]">
+
+        <p class="mb-7">
+          존경하는 임직원 여러분, 그리고 파트너 여러분.
+          우리는 지난 한 해 동안 기술 중심의 혁신과 현장 중심의 실행력을 결합해
+          여러 굵직한 성과를 이루어냈습니다. 특히 핵심 소재 국산화의 가속,
+          자동화 공정 전환, 글로벌 고객사로의 확대는 시노펙스의 방향성과 전략이
+          올바르게 작동하고 있음을 보여줍니다.
+        </p>
+
+        <p class="mb-7">
+          2025년 시노펙스는 ‘기술의 깊이’와 ‘사업의 넓이’를 동시에 확장하겠습니다.
+          연구개발 조직의 체계를 고도화하고, 생산 기반의 품질 일관성을 높이며,
+          글로벌 시장과의 접점을 대폭 확대하는 데 집중하겠습니다.
+          기술은 선언이 아니라 실행이며, 실행은 곧 우리의 신뢰입니다.
+        </p>
+
+        <p class="mb-7">
+          또한 지속가능성은 선택이 아닌 의무입니다. 친환경 공정 전환,
+          에너지 효율 최적화 등 ESG 중심의 경영 요소를 더욱 다각화해
+          세계 시장에서 인정받는 책임 있는 기업으로 성장하겠습니다.
+        </p>
+
+        <p class="mb-7">
+          여러분의 헌신과 열정이 시노펙스의 미래를 만듭니다.
+          2025년에도 변함없는 도전과 성취로 새로운 역사를 써 내려갑시다.
+        </p>
+
+        <p class="mt-10 font-semibold tracking-wide">감사합니다.</p>
+
+        <div class="mt-4 text-right">
+          <div class="text-white/80 text-sm">시노펙스 대표이사</div>
+          <div class="text-2xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+            손경익
+          </div>
         </div>
-        <div class="mt-4 flex gap-2">
-          <span class="pill text-xs">기술 자립</span>
-          <span class="pill text-xs">소재 혁신</span>
-        </div>
+
       </div>
-    </article>
+    </div>
+
   </div>
 </section>
 
+
+
+
+
+
+
+
+
     <!-- =========================
-         2. 현장 검증 (Events list)
+         Call-to-action section
          ========================= -->
-    <section id="field" class="mb-12" aria-label="현장 검증">
-      <div class="flex items-start justify-between mb-6">
-        <div>
-          <h2 class="text-2xl md:text-3xl font-bold" data-aos="fade-right">전시·학술대회</h2>
-          <p class="text-gray-600 mt-2 max-w-2xl">전시회와 학회를 통해 국내외 전문가에게 기술력이 검증된 사례들을 모았습니다.</p>
-        </div>
-      </div>
-
-      <div class="space-y-6">
-        <!-- event 1 -->
-        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row gap-6 items-center" data-aos="fade-up">
-          <img src="images\semicon 1.png" alt="SEMICON Korea 2025" class="w-full md:w-1/3 card-image-cover">
-          <div class="flex-1">
-            <h3 class="text-xl font-semibold text-[var(--brand)]">SEMICON Korea 2025 (2.19~21, 코엑스)</h3>
-            <div class="mt-3">
-              <p class="text-sm text-gray-600">- 국내 최초 10나노 반도체용 케미컬 필터 개발 공개</p>
-              <p class="text-sm text-gray-600">- 15나노 및 10나노 반도체용 케미컬 필터 2종</p>
-              <p class="text-sm text-gray-600">- 70나노 및 50나노 CMP필터 2종</p>
-              <p class="text-sm text-gray-600">- Post-CMP필터 1종 첫 선</p>
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2">
-              <span class="pill text-xs">국산화</span>
-              <span class="pill text-xs">초정밀공정</span>
-              <span class="pill text-xs">공급망 대응</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- event 2 -->
-        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row-reverse gap-6 items-center" data-aos="fade-up" data-aos-delay="80">
-          <img src="images\Entech_2025_new.jpg" alt="ENTECH 2025" class="w-full md:w-1/3 card-image-cover">
-          <div class="flex-1">
-            <h3 class="text-xl font-semibold text-[var(--brand)]">ENTECH/ENVEX 2025 (6.11~13 & 8.27~29)</h3>
-            <div class="mt-3">
-              <p class="text-sm text-gray-600">- 6개국 180개 기업 참여, 대표 국제 환경에너지 전시회</p>
-              <p class="text-sm text-gray-600">- 가압식 PVDF 멤브레인 필터, 침지식 MBR 필터 2종</p>
-              <p class="text-sm text-gray-600">- CMP필터, 케미컬필터, POU필터, PES필터 등 전시</p>
-              <p class="text-sm text-gray-600">- 기체분리막(H2, O2, CO2) 신기술 공개</p>
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2">
-              <span class="pill text-xs">수처리 통합</span>
-              <span class="pill text-xs">탄소중립</span>
-              <span class="pill text-xs">친환경기술</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- event 3 -->
-        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row gap-6 items-center" data-aos="fade-up" data-aos-delay="140">
-          <img src="images\unnamed.png" alt="KSN 2025" class="w-full md:w-1/3 card-image-cover">
-          <div class="flex-1">
-            <h3 class="text-xl font-semibold text-[var(--brand)]">KSN 2025 대한신장학회 (6.19~22, 코엑스)</h3>
-            <div class="mt-3">
-              <p class="text-sm text-gray-600">- AI 기술 적용 플랫폼 '넥스케어' 최초 공개</p>
-              <p class="text-sm text-gray-600">- 원격모니터링 이동형 혈액투석의료기기 개발 현황 발표</p>
-              <p class="text-sm text-gray-600">- CRRT, HD기기, 혈액여과기, 정수기 등 전시</p>
-              <p class="text-sm text-gray-600">- 세계여행투석네트워크(WTDM) 연계 플랫폼 시연</p>
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2">
-              <span class="pill text-xs">AI 플랫폼</span>
-              <span class="pill text-xs">원격모니터링</span>
-              <span class="pill text-xs">환자접근성</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- event 4 -->
-        <article class="p-5 rounded-xl bg-white shadow-sm card-border flex flex-col md:flex-row-reverse gap-6 items-center" data-aos="fade-up" data-aos-delay="200">
-          <img src="images\261_ext_04_0.jpg" alt="JSHHD 2025" class="w-full md:w-1/3 card-image-cover">
-          <div class="flex-1">
-            <h3 class="text-xl font-semibold text-[var(--brand)]">JSHHD 2025 일본 국제재택혈액투석학회 (9.6~8)</h3>
-            <div class="mt-3">
-              <p class="text-sm text-gray-600">- 10개국 600여 명의 전문의 참가 국제 학회</p>
-              <p class="text-sm text-gray-600">- Synoflux® 혈액여과기 임상결과 첫 국제 발표</p>
-              <p class="text-sm text-gray-600">- SCI급 논문 게재 이후 첫 해외 발표</p>
-              <p class="text-sm text-gray-600">- 이동형 인공신장기 제품군 해외 첫 공개</p>
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2">
-              <span class="pill text-xs">글로벌 검증</span>
-              <span class="pill text-xs">임상신뢰도</span>
-              <span class="pill text-xs">국제네트워크</span>
-          </div>
-        </article>
+    <section class="mb-24 p-6 rounded-2xl bg-[linear-gradient(180deg,#f7fbff,transparent)] card-border text-center" data-aos="fade-up">
+      <h3 class="text-2xl font-semibold text-[var(--brand)]">시노펙스는 성과로 증명합니다</h3>
+      <p class="text-sm text-gray-600 mt-3">기술의 탄생, 현장검증, 그리고 시장 확장 — 3단 스토리 플로우로 연결되는 여정에 함께해 주세요.</p>
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://goodlight1234.github.io/synopex2025/overview.html" class="px-4 py-2 rounded-md border border-[var(--brand)] text-[var(--brand)]">시노펙스 2025 한눈에 보기</a>
+        <a href="https://goodlight1234.github.io/synopex2025/interview.html" class="px-4 py-2 rounded-md bg-[var(--brand)] text-white">성과 뒤에 숨은 사람들 이야기</a>
       </div>
     </section>
-<section class="mb-6">
-
-</section>
-
-
 
   </main>
 
