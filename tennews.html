@@ -11,45 +11,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.8/countUp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-    <script>
-     document.addEventListener('DOMContentLoaded', function() {
+     <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ✅ AOS 초기화 (모바일 비활성화)
+      AOS.init({
+        duration: 600,
+        once: true,
+        offset: 80,
+        easing: 'ease-out-cubic',
+        disable: window.innerWidth < 768
+      });
 
-  AOS.init({
-    duration: 800,
-    once: true
-  });
+      // ✅ 모바일 메뉴
+      const menuBtn = document.getElementById('openMenu');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('menuOverlay');
+      const closeBtn = document.getElementById('closeMenu');
 
-  // 모바일 메뉴
-  const menuBtn = document.getElementById('openMenu');
-  const mobileMenu = document.getElementById("mobileMenu");
-  const overlay = document.getElementById("menuOverlay");
-  const closeBtn = document.getElementById("closeMenu");
+      function closeMenu() {
+        mobileMenu.classList.add("translate-x-full");
+        overlay.classList.add("opacity-0", "pointer-events-none");
+      }
 
-  menuBtn.addEventListener("click", () => {
-    mobileMenu.classList.remove("translate-x-full");
-    overlay.classList.remove("opacity-0", "pointer-events-none");
-  });
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("translate-x-full");
+        overlay.classList.remove("opacity-0", "pointer-events-none");
+      });
+      closeBtn.addEventListener("click", closeMenu);
+      overlay.addEventListener("click", closeMenu);
 
-  closeBtn.addEventListener("click", closeMenu);
-  overlay.addEventListener("click", closeMenu);
+      // ✅ 스크롤 탑 버튼 (requestAnimationFrame 최적화)
+      const scrollTopBtn = document.getElementById("scrollTopBtn");
+      let ticking = false;
 
-  function closeMenu() {
-    mobileMenu.classList.add("translate-x-full");
-    overlay.classList.add("opacity-0", "pointer-events-none");
-  }
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            scrollTopBtn.style.display = window.scrollY > 300 ? "flex" : "none";
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
 
-  // 스크롤 탑 버튼
-  const scrollTopBtn = document.getElementById("scrollTopBtn");
-  window.addEventListener("scroll", () => {
-    scrollTopBtn.style.display = window.scrollY > 300 ? "flex" : "none";
-  });
-
-  scrollTopBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-});
-
-    </script>
+      scrollTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+  </script>
     <style>
  /* =========================================================
    1. CSS Variables
