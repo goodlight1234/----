@@ -395,8 +395,110 @@ img {
   height: auto;
   display: block;
 }
+/* ===============================
+   📱 Top10 Mobile Scroll
+   =============================== */
+.top10-scroll {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
 
+.top10-card {
+  min-width: 240px;
+  padding: 18px;
+  scroll-snap-align: start;
+}
 
+.top10-card h3 {
+  font-weight: 700;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.top10-card p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+/* 스크롤바 숨김 */
+.top10-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===============================
+   📱 Swipe Hint (Right)
+   =============================== */
+.top10-hint {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #6b7280;
+  text-align: right;
+  animation: swipeHintRight 1.8s ease-in-out infinite;
+}
+
+@keyframes swipeHintRight {
+  0%   { transform: translateX(0); opacity: 0.6; }
+  50%  { transform: translateX(6px); opacity: 1; }
+  100% { transform: translateX(0); opacity: 0.6; }
+}
+/* ===============================
+   🖥 PC Top10 Card Design
+   =============================== */
+.top10-pc-card {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+
+.top10-pc-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.top10-pc-card p {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* TOP 순위 뱃지 */
+.top10-rank {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sinofex-deep);
+  letter-spacing: 0.05em;
+}
+.top10-pc-card {
+  cursor: pointer;
+  position: relative;
+}
+
+.top10-pc-card::after {
+  content: "→";
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  font-size: 1.1rem;
+  color: #9ca3af; /* gray-400 */
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+
+.top10-pc-card:hover::after {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.top10-pc-card:hover {
+  transform: translateY(-3px);
+}
     </style>
 
 </head>
@@ -505,24 +607,117 @@ img {
 
      
     </div>
-    <section class="section">
+    
+</section>
+<!-- ===============================
+     2025 주요 10대 뉴스 (INDEX)
+     =============================== -->
+<section id="top10-index" class="section bg-[var(--muted)]">
   <div class="max-w-6xl mx-auto px-4">
 
-    <h2 class="text-xl font-bold mb-4">2025 주요 10대 뉴스</h2>
+    <!-- 섹션 헤더 -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-[var(--sinofex-deep)] mb-2">
+        2025 주요 10대 뉴스
+      </h2>
+      <div class="sinofex-hr"></div>
+    <p class="top10-hint md:hidden">오른쪽으로 스와이프하여 주요 뉴스를 확인하세요 →</p>
 
-    <div class="grid md:grid-cols-2 gap-3 text-sm">
-      <a href="#news-1">1. 혈액여과기 CE MDR 인증 신청</a>
-      <a href="#news-2">2. 혈액투석 임상·논문 게재</a>
-      <a href="#news-3">3. 롯데케미칼 수처리 사업 인수</a>
-      <a href="#news-4">4. 멤브레인 풀라인업 구축</a>
-      <a href="#news-5">5. 글로벌 파트너십 확대</a>
-      <!-- 필요시 10개까지 -->
     </div>
 
-  </div>
-</section>
+    <!-- 📱 모바일: 가로 스크롤 -->
+    <div class="top10-scroll md:hidden">
+      <a href="#news-1" class="card top10-card">
+        <span class="pill">TOP 1</span>
+        <h3>혈액여과기 CE MDR 인증 신청</h3>
+        <p class="small-muted">국내 최초 유럽 의료기기 인증 절차 개시</p>
+      </a>
+
+      <a href="#news-2" class="card top10-card">
+        <span class="pill">TOP 2</span>
+        <h3>혈액투석 임상·논문 게재</h3>
+        <p class="small-muted">SCI급 국제 학술지 성능 입증</p>
+      </a>
+
+      <a href="#news-3" class="card top10-card">
+        <span class="pill">TOP 3</span>
+        <h3>롯데케미칼 수처리 사업 인수</h3>
+        <p class="small-muted">수처리 토털 솔루션 기업 도약</p>
+      </a>
+
+      <a href="#news-4" class="card top10-card">
+        <span class="pill">TOP 4</span>
+        <h3>멤브레인 풀라인업 구축</h3>
+        <p class="small-muted">MBR·PVDF·UF·NF 전 라인 확보</p>
+      </a>
+
+      <a href="#news-5" class="card top10-card">
+        <span class="pill">TOP 5</span>
+        <h3>글로벌 파트너십 확대</h3>
+        <p class="small-muted">유럽·중동 시장 협력 강화</p>
+      </a>
+
+      <a href="#news-6" class="card top10-card">
+        <span class="pill">TOP 6</span>
+        <h3>AI 기반 홍보 캠페인</h3>
+        <p class="small-muted">AI 콘텐츠 제작·운영 본격화</p>
+      </a>
+
+      <a href="#news-7" class="card top10-card">
+        <span class="pill">TOP 7</span>
+        <h3>ESG·탄소배출권 성과</h3>
+        <p class="small-muted">환경 사업 수익 모델 가시화</p>
+      </a>
+
+      <a href="#news-8" class="card top10-card">
+        <span class="pill">TOP 8</span>
+        <h3>국책과제·R&D 선정</h3>
+        <p class="small-muted">차세대 멤브레인 기술 확보</p>
+      </a>
+
+      <a href="#news-9" class="card top10-card">
+        <span class="pill">TOP 9</span>
+        <h3>해외 수출·공급 계약</h3>
+        <p class="small-muted">글로벌 매출 기반 확대</p>
+      </a>
+
+      <a href="#news-10" class="card top10-card">
+        <span class="pill">TOP 10</span>
+        <h3>2026 성장 전략 수립</h3>
+        <p class="small-muted">의료·수처리 집중 전략</p>
+      </a>
+    </div>
+
+    <!-- 🖥 PC: 2열 카드 -->
+    <div class="hidden md:grid md:grid-cols-2 gap-6">
+
+  <a href="#news-1" class="card top10-pc-card">
+    <div class="top10-rank">TOP 1</div>
+    <h3>혈액여과기 CE MDR 인증 신청</h3>
+    <p>국내 최초 유럽 의료기기 인증 절차 공식 개시</p>
+  </a>
+
+  <a href="#news-2" class="card top10-pc-card">
+    <div class="top10-rank">TOP 2</div>
+    <h3>혈액투석 임상·논문 게재</h3>
+    <p>SCI급 국제 학술지 성능 검증 완료</p>
+  </a>
+
+  <a href="#news-3" class="card top10-pc-card">
+    <div class="top10-rank">TOP 3</div>
+    <h3>롯데케미칼 수처리 사업 인수</h3>
+    <p>수처리 토털 솔루션 기업으로 도약</p>
+  </a>
+
+  <a href="#news-4" class="card top10-pc-card">
+    <div class="top10-rank">TOP 4</div>
+    <h3>멤브레인 풀라인업 구축</h3>
+    <p>MBR·PVDF·UF·NF 전 라인 확보</p>
+  </a>
 
 </section>
+
+
 <section id="business" class="section">
     <section id="tech" class="section bg-white">
   <div class="max-w-6xl mx-auto px-4">
